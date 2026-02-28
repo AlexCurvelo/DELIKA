@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -40,60 +40,112 @@
 
   <section class="menu-completo">
     <div class="menu-card">
+      <button class="btn-verificar-carrinho" onclick="exibirCarrinho()" style="margin-bottom:12px;display:flex;align-items:center;gap:6px;font-size:1rem;">
+        <i class="fa-solid fa-cart-shopping" style="color:#c98cff;font-size:1.2em;"></i> Verificar Carrinho
+      </button>
       <h2 class="menu-category" id="bolos-simples">Bolos Simples (Massa Caseira)</h2>
       <a href="itens_cardapio/bolo-fuba.html" class="menu-item has-preview"><span class="menu-item-name">Fubá com Goiabada</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 27,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/fuba-goiabada-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-fuba', nome: 'Fubá com Goiabada', preco: 27.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-milho.html" class="menu-item has-preview"><span class="menu-item-name">Milho Verde</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 27,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/milho-verde-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-milho', nome: 'Milho Verde', preco: 27.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-laranja.html" class="menu-item has-preview"><span class="menu-item-name">Laranja</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 27,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/laranja-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-laranja', nome: 'Laranja', preco: 27.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-iogurte-canela.html" class="menu-item has-preview"><span class="menu-item-name">Iogurte com Canela</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 27,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/iogurte-canela-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-iogurte-canela', nome: 'Iogurte com Canela', preco: 27.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-aipim-coco.html" class="menu-item has-preview"><span class="menu-item-name">Aipim com Coco</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 30,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/aipim-coco-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-aipim-coco', nome: 'Aipim com Coco', preco: 30.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-chocolate-simples.html" class="menu-item has-preview"><span class="menu-item-name">Chocolate Simples (70% cacau)</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 30,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/chocolate-simples-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-chocolate-simples', nome: 'Chocolate Simples (70% cacau)', preco: 30.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-mesclado.html" class="menu-item has-preview"><span class="menu-item-name">Mesclado (Baunilha/Chocolate)</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 30,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/mesclado-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-mesclado', nome: 'Mesclado (Baunilha/Chocolate)', preco: 30.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-banana-caramelada.html" class="menu-item has-preview"><span class="menu-item-name">Banana Caramelada</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 30,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/banana-caramelada-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-banana-caramelada', nome: 'Banana Caramelada', preco: 30.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-baunilha-gotas.html" class="menu-item has-preview"><span class="menu-item-name">Baunilha com Gotas de Chocolate</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 32,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/baunilha-gotas-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-baunilha-gotas', nome: 'Baunilha com Gotas de Chocolate', preco: 32.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-queijo.html" class="menu-item has-preview"><span class="menu-item-name">Queijo (Parmesão)</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 32,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/queijo-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-queijo', nome: 'Queijo (Parmesão)', preco: 32.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-cocada-invertida.html" class="menu-item has-preview"><span class="menu-item-name">Cocada Invertida</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 32,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/cocada-invertida-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-cocada-invertida', nome: 'Cocada Invertida', preco: 32.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-maca-canela.html" class="menu-item has-preview"><span class="menu-item-name">Maçã com Canela</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 32,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/maca-canela-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-maca-canela', nome: 'Maçã com Canela', preco: 32.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/bolo-veludo-vermelho.html" class="menu-item has-preview"><span class="menu-item-name">Veludo Vermelho (simples/açúcar)</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 34,00 a R$ 42,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/veludo-vermelho-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'bolo-veludo-vermelho', nome: 'Veludo Vermelho (simples/açúcar)', preco: 34.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
     </div>
 
     <div class="menu-card">
+      <button class="btn-verificar-carrinho" onclick="exibirCarrinho()" style="margin-bottom:12px;display:flex;align-items:center;gap:6px;font-size:1rem;">
+        <i class="fa-solid fa-cart-shopping" style="color:#d16e6e;font-size:1.2em;"></i> Verificar Carrinho
+      </button>
       <h2 class="menu-category" id="bolos-vulcao">Bolos Especiais e Vulcão</h2>
       <a href="itens_cardapio/vulcao-brigadeiro.html" class="menu-item has-preview"><span class="menu-item-name">Vulcão de Brigadeiro</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 65,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/vulcao-brigadeiro-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'vulcao-brigadeiro', nome: 'Vulcão de Brigadeiro', preco: 65.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/vulcao-ninho.html" class="menu-item has-preview"><span class="menu-item-name">Vulcão de Leite Ninho</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/vulcao-ninho-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'vulcao-ninho', nome: 'Vulcão de Leite Ninho', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/vulcao-prestigio.html" class="menu-item has-preview"><span class="menu-item-name">Vulcão de Prestígio</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/vulcao-prestigio-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'vulcao-prestigio', nome: 'Vulcão de Prestígio', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/vulcao-cenoura-chocolate.html" class="menu-item has-preview"><span class="menu-item-name">Vulcão de Cenoura com Chocolate</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 55,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/vulcao-cenoura-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'vulcao-cenoura-chocolate', nome: 'Vulcão de Cenoura com Chocolate', preco: 55.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/vulcao-abacaxi-limao.html" class="menu-item has-preview"><span class="menu-item-name">Vulcão de Abacaxi/Limão</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 55,00 a R$ 60,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/vulcao-abacaxi-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'vulcao-abacaxi-limao', nome: 'Vulcão de Abacaxi/Limão', preco: 55.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/arco-iris-pink-velvet.html" class="menu-item has-preview"><span class="menu-item-name">Bolo Arco-Íris/Pink Velvet</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 100,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/arco-iris-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'arco-iris-pink-velvet', nome: 'Bolo Arco-Íris/Pink Velvet', preco: 100.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/kitkat-pinhata.html" class="menu-item has-preview"><span class="menu-item-name">Bolo Kit Kat/Pinhata</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 100,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/kitkat-pinhata-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'kitkat-pinhata', nome: 'Bolo Kit Kat/Pinhata', preco: 100.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/veludo-vermelho-especial.html" class="menu-item has-preview"><span class="menu-item-name">Veludo Vermelho Especial</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 110,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/veludo-vermelho-especial-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'veludo-vermelho-especial', nome: 'Veludo Vermelho Especial', preco: 110.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
     </div>
 
     <div class="menu-card">
+      <button class="btn-verificar-carrinho" onclick="exibirCarrinho()" style="margin-bottom:12px;display:flex;align-items:center;gap:6px;font-size:1rem;">
+        <i class="fa-solid fa-cart-shopping" style="color:#d16e6e;font-size:1.2em;"></i> Verificar Carrinho
+      </button>
       <h2 class="menu-category" id="sobremesas">Sobremesas e Tortas</h2>
       <a href="itens_cardapio/banoffee.html" class="menu-item has-preview"><span class="menu-item-name">Banoffee (travessa ou torta)</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/banoffee-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'banoffee', nome: 'Banoffee (travessa ou torta)', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/torta-limao.html" class="menu-item has-preview"><span class="menu-item-name">Torta de Limão/Maracujá</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/torta-limao-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'torta-limao', nome: 'Torta de Limão/Maracujá', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/pudim.html" class="menu-item has-preview"><span class="menu-item-name">Pudim de Leite Condensado</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 60,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/pudim-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'pudim', nome: 'Pudim de Leite Condensado', preco: 60.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/gelatina-mosaico.html" class="menu-item has-preview"><span class="menu-item-name">Gelatina Mosaico/Arco-Íris</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 60,00 a R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/gelatina-mosaico-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'gelatina-mosaico', nome: 'Gelatina Mosaico/Arco-Íris', preco: 60.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/charlotte.html" class="menu-item has-preview"><span class="menu-item-name">Charlotte (chocolate/frutas vermelhas)</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 80,00 a R$ 90,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/charlotte-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'charlotte', nome: 'Charlotte (chocolate/frutas vermelhas)', preco: 80.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/torta-holandesa.html" class="menu-item has-preview"><span class="menu-item-name">Torta Holandesa</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 80,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/torta-holandesa-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'torta-holandesa', nome: 'Torta Holandesa', preco: 80.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
     </div>
 
     <div class="menu-card">
+      <button class="btn-verificar-carrinho" onclick="exibirCarrinho()" style="margin-bottom:12px;display:flex;align-items:center;gap:6px;font-size:1rem;">
+        <i class="fa-solid fa-cart-shopping" style="color:#d16e6e;font-size:1.2em;"></i> Verificar Carrinho
+      </button>
       <h2 class="menu-category" id="doces">Doces e Individuais</h2>
       <a href="itens_cardapio/brigadeiro-gourmet.html" class="menu-item has-preview"><span class="menu-item-name">Brigadeiros Gourmet</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 2,00 (unid.)</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/brigadeiro-gourmet-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'brigadeiro-gourmet', nome: 'Brigadeiros Gourmet', preco: 2.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/mini-cheesecake.html" class="menu-item has-preview"><span class="menu-item-name">Mini Cheesecakes</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 8,00 a R$ 10,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/mini-cheesecake-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'mini-cheesecake', nome: 'Mini Cheesecakes', preco: 8.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/palha-italiana.html" class="menu-item has-preview"><span class="menu-item-name">Palha Italiana</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 8,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/palha-italiana-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'palha-italiana', nome: 'Palha Italiana', preco: 8.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/doces-pote.html" class="menu-item has-preview"><span class="menu-item-name">Doces no Pote</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 10,00 a R$ 15,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/doces-pote-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'doces-pote', nome: 'Doces no Pote', preco: 10.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/cones-trufados.html" class="menu-item has-preview"><span class="menu-item-name">Cones Trufados</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 8,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/cones-trufados-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'cones-trufados', nome: 'Cones Trufados', preco: 8.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/mini-brownie.html" class="menu-item has-preview"><span class="menu-item-name">Mini Brownie Gourmet</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 2,30 (unid.)</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/mini-brownie-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'mini-brownie', nome: 'Mini Brownie Gourmet', preco: 2.30, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
     </div>
 
     <div class="menu-card">
+      <button class="btn-verificar-carrinho" onclick="exibirCarrinho()" style="margin-bottom:12px;display:flex;align-items:center;gap:6px;font-size:1rem;">
+        <i class="fa-solid fa-cart-shopping" style="color:#d16e6e;font-size:1.2em;"></i> Verificar Carrinho
+      </button>
       <h2 class="menu-category" id="fit">Linha Fit e Zero</h2>
       <a href="itens_cardapio/fit-bolo-laranja.html" class="menu-item has-preview"><span class="menu-item-name">Bolo de Laranja Fit</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/fit-bolo-laranja-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'fit-bolo-laranja', nome: 'Bolo de Laranja Fit', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/fit-bolo-chocolate.html" class="menu-item has-preview"><span class="menu-item-name">Bolo de Chocolate Fit</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/fit-bolo-chocolate-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'fit-bolo-chocolate', nome: 'Bolo de Chocolate Fit', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/fit-bolo-cenoura.html" class="menu-item has-preview"><span class="menu-item-name">Bolo de Cenoura Fit</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/fit-bolo-cenoura-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'fit-bolo-cenoura', nome: 'Bolo de Cenoura Fit', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <a href="itens_cardapio/fit-bolo-banana.html" class="menu-item has-preview"><span class="menu-item-name">Bolo de Banana Fit</span><span class="menu-item-dots"></span><span class="menu-item-price">R$ 70,00</span><span class="cta-hover">Ver detalhes</span><img class="item-preview-img" src="img/fit-bolo-banana-preview.jpg" alt="Prévia do produto" loading="lazy"></a>
+      <label class="cart-checkbox-label"><input type="checkbox" class="cart-checkbox" onchange="toggleCarrinhoCheckbox(this, {id: 'fit-bolo-banana', nome: 'Bolo de Banana Fit', preco: 70.00, qtd: 1})"><i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho</label>
       <div style="text-align:center; margin-top:18px;">
         <a href="https://wa.me/5511974757194" class="btn-primary" target="_blank" rel="noopener">
           <img src="img/Digital_Glyph_Green.svg" alt="WhatsApp" width="24" height="24"> Encomendar Agora
@@ -133,6 +185,23 @@
           </a>
         </div>
       </div>
+      <!-- NOVA COLUNA: AVALIAÇÕES GOOGLE -->
+      <div class="footer-col avaliacoes-google">
+        <h3>Aprovação 5 Estrelas</h3>
+        <!-- Fallback UI: Prova Social Estática (Plano B) -->
+        <p class="mais-clientes" style="margin-bottom: 8px; color: #ccc; font-size: 0.9rem;">
+          +324 clientes avaliaram
+        </p>
+        <div class="estrelas-footer">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
+        <p><strong>5.0</strong> de satisfação no Google.</p>
+        <a href="https://g.page/r/Cd3jwy6AxhOPEBM/review" target="_blank" rel="noopener noreferrer" class="btn-review">Ler avaliações</a>
+      </div>
     </div>
     <div class="footer-bottom">
       <small>&copy; 2026 Deliká Bolos e Doces. Todos os direitos reservados.</small>
@@ -142,8 +211,45 @@
   <a href="https://wa.me/5511974757194" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
     <img src="img/Digital_Glyph_Green.svg" alt="Ícone do WhatsApp" width="35" height="35" loading="lazy">
   </a>
+
+  <!-- Carrinho Modal -->
+  <div id="carrinhoModal" class="carrinho-modal">
+    <div class="carrinho-modal-content">
+      <div class="carrinho-modal-header">
+        <h2><i class="fa-solid fa-cart-shopping"></i> Seu Carrinho</h2>
+        <span class="close-modal" onclick="fecharCarrinhoModal()">&times;</span>
+      </div>
+      
+      <div class="carrinho-modal-body">
+        <ul id="carrinhoItens"></ul>
+        <div class="carrinho-vazio" id="carrinhoVazio">
+          <i class="fa-solid fa-cart-plus"></i>
+          <p>Seu carrinho está vazio.</p>
+        </div>
+        
+        <div id="formularioCliente" style="display: none;">
+          <div class="form-group">
+            <label for="clienteNome">Nome Completo</label>
+            <input type="text" id="clienteNome" placeholder="Digite seu nome completo" required>
+          </div>
+          <div class="form-group">
+            <label for="clienteTelefone">Telefone/WhatsApp</label>
+            <input type="tel" id="clienteTelefone" placeholder="(11) 99999-9999" required>
+          </div>
+        </div>
+      </div>
+      
+      <div class="carrinho-modal-footer">
+        <button id="finalizarPedidoBtn" class="btn-encomendar" onclick="enviarPedidoWhatsApp()">
+          <i class="fa-brands fa-whatsapp"></i> Encomendar Agora
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
+
+
 
 
 
