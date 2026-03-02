@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Clientes | Deliká ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    .header-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 20px; flex-wrap: wrap; }
+    .table-container { background: #fff; border-radius: 14px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; min-width: 700px; }
+    th, td { padding: 16px 20px; border-bottom: 1px solid #eee; }
+    th { background: #fafafa; color: #666; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
+    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 800; }
+    .status-pedido { background: #e3f2fd; color: #1976d2; }
+    .status-producao { background: #fffde7; color: #fbc02d; }
+    .status-entregue { background: #e8f5e9; color: #388e3c; }
+    .status-pago { background: #f3e5f5; color: #7b1fa2; }
+    .btn-delete { color: var(--vermelho-erro); border: none; background: none; cursor: pointer; font-size: 1.1rem; }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; place-items: center; z-index: 2000; padding: 20px; }
+    .modal.active { display: grid; }
+    .modal-content { background: #fff; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+    .full { grid-column: span 2; }
+    label { font-size: 0.85rem; font-weight: 700; color: #555; display: block; margin-bottom: 5px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; outline: none; }
+    input:focus { border-color: var(--roxo-delika); }
+    .btn-save { background: var(--roxo-delika); color: #fff; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 20px; transition: 0.2s; }
+    .btn-save:hover { background: var(--roxo-escuro); }
+  </style>
+</head>
+<body>
+  <div id="mobileOverlay" class="mobile-overlay" aria-hidden="true"></div>
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/logodlk.png" alt="Logo Delika">
+      <h2>Painel ADM</h2>
+    </div>
+    <ul class="nav-menu">
+      <li class="menu-divisor">Principal</li>
+      <li><a href="painel.html"><i class="fa-solid fa-chart-pie"></i> Visão Geral</a></li>
+      <li><a href="pedidos.html"><i class="fa-solid fa-list-check"></i> Pedidos (Kanban)</a></li>
+      <li><a href="produtos.html"><i class="fa-solid fa-cake-candles"></i> Meus Bolos</a></li>
+      <li><a href="clientes.html" class="ativo"><i class="fa-solid fa-users"></i> Clientes (CRM)</a></li>
+      <li class="menu-divisor">Gestão & Operação</li>
+      <li><a href="estoque.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
+      <li><a href="custos.html"><i class="fa-solid fa-coins"></i> Custos e Ficha Técnica</a></li>
+      <li class="menu-divisor">Loja</li>
+      <li><a href="../cardapio.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-store"></i> Ver Loja Pública</a></li>
+    </ul>
+    <div class="logout-btn">
+      <a href="login.html" data-logout="true"><i class="fa-solid fa-right-from-bracket"></i> Sair do Sistema</a>
+    </div>
+  </aside>
+  <main class="main-content">
+    <div class="header-summary">
+      <h1>Clientes</h1>
+      <button class="btn-action" onclick="toggleModal(true)" style="background: var(--dourado); color: var(--roxo-escuro); border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+        <i class="fa-solid fa-user-plus"></i> Novo Cliente
+      </button>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Contato</th>
+            <th>Status Operacional</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="clientesTableBody"></tbody>
+      </table>
+    </div>
+  </main>
+  <!-- MODAL CADASTRO CLIENTE -->
+  <div class="modal" id="clienteModal">
+    <div class="modal-content">
+      <h2 style="font-family:'Playfair Display'; color: var(--roxo-delika)">Cadastrar Cliente</h2>
+      <form id="clienteForm">
+        <div class="form-grid">
+          <div class="full">
+            <label>Nome</label>
+            <input type="text" id="nomeCliente" name="nomeCliente" required>
+          </div>
+          <div class="full">
+            <label>Endereço</label>
+            <input type="text" id="enderecoCliente" name="enderecoCliente" required>
+          </div>
+          <div>
+            <label>Contato (WhatsApp)</label>
+            <input type="tel" id="contatoCliente" name="contatoCliente" placeholder="(99) 99999-9999" required>
+          </div>
+          <div>
+            <label>Status Operacional</label>
+            <select id="statusCliente" name="statusCliente">
+              <option value="pedido">Pedido</option>
+              <option value="producao">Produção</option>
+              <option value="entregue">Entregue</option>
+              <option value="pago">Pago</option>
+            </select>
+          </div>
+          <div style="display: flex; align-items: flex-end;">
+            <button type="submit" class="btn-save" style="margin-top:0">Salvar</button>
+          </div>
+        </div>
+        <button type="button" onclick="toggleModal(false)" style="background:none; border:none; color:#888; width:100%; margin-top:10px; cursor:pointer">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  <script src="adm-auth.js"></script>
+  <script>
+    (function() {
+      "use strict";
+      if (window.DelikAuth && !window.DelikAuth.requireAuth()) return;
+
+      const STORAGE_KEY = "delika_clients_v5";
+      let clientes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      window.toggleModal = function(show) {
+        document.getElementById('clienteModal').classList.toggle('active', show);
+      };
+      function renderClientes() {
+        const tbody = document.getElementById('clientesTableBody');
+        tbody.innerHTML = "";
+        if (clientes.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='5' style='text-align:center'>Nenhum cliente cadastrado.</td></tr>";
+        }
+        clientes.forEach((cliente, index) => {
+          // Formata contato para link WhatsApp
+          const tel = cliente.contatoCliente.replace(/\D/g, '');
+          const waLink = tel.length >= 10 ? `<a href='https://wa.me/55${tel}' target='_blank' style='color:var(--roxo-delika);text-decoration:none'><i class='fa-brands fa-whatsapp'></i> ${cliente.contatoCliente}</a>` : cliente.contatoCliente;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${cliente.nomeCliente}</strong></td>
+            <td>${cliente.enderecoCliente}</td>
+            <td>${waLink}</td>
+            <td><span class="status-badge status-${cliente.statusCliente}">${cliente.statusCliente.charAt(0).toUpperCase() + cliente.statusCliente.slice(1)}</span></td>
+            <td>
+              <button class="btn-delete" onclick="removerCliente(${index})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(clientes));
+      }
+      document.getElementById('clienteForm').onsubmit = (e) => {
+        e.preventDefault();
+        const novo = {
+          id: Date.now(),
+          nomeCliente: document.getElementById('nomeCliente').value,
+          enderecoCliente: document.getElementById('enderecoCliente').value,
+          contatoCliente: document.getElementById('contatoCliente').value,
+          statusCliente: document.getElementById('statusCliente').value
+        };
+        clientes.push(novo);
+        renderClientes();
+        toggleModal(false);
+        e.target.reset();
+      };
+      window.removerCliente = (i) => {
+        if(confirm('Deseja realmente excluir este cliente?')) {
+          clientes.splice(i, 1);
+          renderClientes();
+        }
+      };
+      renderClientes();
+    })();
+  </script>
+</body>
+</html>
+

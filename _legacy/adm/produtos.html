@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Meus Bolos | Deliká ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    .action-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 15px; }
+    .table-container { background: #fff; border-radius: 14px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; min-width: 900px; }
+    th, td { padding: 18px 20px; border-bottom: 1px solid #eee; vertical-align: middle; }
+    th { background: #fafafa; color: #666; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
+    .badge-cat { background: var(--lilas-claro); color: var(--roxo-delika); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; }
+    .ficha-preview { font-size: 0.8rem; color: #777; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: italic; }
+    .btn-icon { background: none; border: none; cursor: pointer; font-size: 1.1rem; transition: 0.2s; margin: 0 5px; color: #999; }
+    .btn-edit:hover { color: var(--dourado); }
+    .btn-copy:hover { color: #2196f3; }
+    .btn-delete:hover { color: var(--vermelho-erro); }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; place-items: center; z-index: 2000; padding: 20px; }
+    .modal.active { display: grid; }
+    .modal-content { background: #fff; padding: 30px; border-radius: 20px; width: 100%; max-width: 550px; max-height: 90vh; overflow-y: auto; }
+    label { display: block; font-size: 0.85rem; font-weight: 700; color: #555; margin-bottom: 5px; }
+    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; margin-bottom: 15px; outline: none; }
+    textarea { height: 100px; resize: vertical; }
+    .btn-save { background: var(--roxo-delika); color: #fff; border: none; padding: 15px; border-radius: 10px; width: 100%; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-save:hover { background: var(--roxo-escuro); }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR PADRONIZADA V5 -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/logodlk.png" alt="Deliká">
+      <h2>Painel ADM</h2>
+    </div>
+    <ul class="nav-menu">
+      <li class="menu-divisor">Principal</li>
+      <li><a href="painel.html"><i class="fa-solid fa-chart-pie"></i> Visão Geral</a></li>
+      <li><a href="pedidos.html"><i class="fa-solid fa-list-check"></i> Pedidos</a></li>
+      <li><a href="produtos.html" class="ativo"><i class="fa-solid fa-cake-candles"></i> Meus Bolos</a></li>
+      <li><a href="clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      <li class="menu-divisor">Operação</li>
+      <li><a href="estoque.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
+      <li><a href="custos.html"><i class="fa-solid fa-coins"></i> Custos</a></li>
+      <li class="menu-divisor">Loja</li>
+      <li><a href="../cardapio.html" target="_blank" rel="noopener"><i class="fa-solid fa-store"></i> Ver Loja Pública</a></li>
+    </ul>
+    <div class="logout-btn">
+      <a href="login.html" data-logout="true"><i class="fa-solid fa-right-from-bracket"></i> Sair do Sistema</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <h1>Catálogo de Produtos</h1>
+      <div class="user-profile"><span>Modo Administrador</span><i class="fa-solid fa-circle-user"></i></div>
+    </div>
+
+    <div class="action-header">
+      <p>Gerencie o cardápio e as fichas técnicas dos seus doces.</p>
+      <button class="btn-action" onclick="abrirModal()" style="background: var(--dourado); color: var(--roxo-escuro); border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+        <i class="fa-solid fa-plus"></i> Novo Produto
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th>Preço Venda</th>
+            <th>Ficha Técnica</th>
+            <th style="width: 140px;">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaProdutos">
+          <!-- Renderizado via JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- MODAL DE PRODUTO -->
+  <div class="modal" id="modalProduto">
+    <div class="modal-content">
+      <h2 id="modalTitulo" style="font-family:'Playfair Display'; color: var(--roxo-delika); margin-bottom: 20px;">Cadastrar Doce</h2>
+      <form id="formProduto">
+        <input type="hidden" id="editIndex" value="-1">
+        <label>Nome do Produto</label>
+        <input type="text" id="prodNome" placeholder="Ex: Bolo Vulcão Ninho" required>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div>
+            <label>Categoria</label>
+            <select id="prodCat">
+              <option value="Bolos Simples">Bolos Simples</option>
+              <option value="Bolos Especiais">Bolos Especiais</option>
+              <option value="Sobremesas">Sobremesas</option>
+              <option value="Doces">Doces</option>
+            </select>
+          </div>
+          <div>
+            <label>Preço de Venda (R$)</label>
+            <input type="number" id="prodPreco" step="0.01" required>
+          </div>
+        </div>
+        <label>Ficha Técnica (Ingredientes e Qtds)</label>
+        <textarea id="prodFicha" placeholder="Ex: 2 xícaras de farinha, 1 lata leite condensado..."></textarea>
+        <button type="submit" class="btn-save">Salvar Produto</button>
+        <button type="button" onclick="fecharModal()" style="background:none; border:none; color:#888; width:100%; margin-top:10px; cursor:pointer">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="adm-auth.js"></script>
+  <script>
+    (function() {
+      "use strict";
+      const STORAGE_KEY = "delika_catalog_v5";
+      let produtos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      window.abrirModal = (index = -1) => {
+        const modal = document.getElementById('modalProduto');
+        const form = document.getElementById('formProduto');
+        const titulo = document.getElementById('modalTitulo');
+        form.reset();
+        document.getElementById('editIndex').value = index;
+        if (index > -1) {
+          titulo.textContent = "Editar Produto";
+          const p = produtos[index];
+          document.getElementById('prodNome').value = p.nome;
+          document.getElementById('prodCat').value = p.categoria;
+          document.getElementById('prodPreco').value = p.preco;
+          document.getElementById('prodFicha').value = p.ficha || "";
+        } else {
+          titulo.textContent = "Cadastrar Novo Doce";
+        }
+        modal.classList.add('active');
+      };
+      window.fecharModal = () => {
+        document.getElementById('modalProduto').classList.remove('active');
+      };
+      function render() {
+        const tbody = document.getElementById('tabelaProdutos');
+        tbody.innerHTML = "";
+        if (produtos.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='5' style='text-align:center; padding:30px; color:#999;'>Nenhum produto no catálogo.</td></tr>";
+        }
+        produtos.forEach((p, i) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${p.nome}</strong></td>
+            <td><span class="badge-cat">${p.categoria}</span></td>
+            <td>R$ ${parseFloat(p.preco).toFixed(2).replace('.', ',')}</td>
+            <td><div class="ficha-preview">${p.ficha || "Sem ficha técnica"}</div></td>
+            <td>
+              <button class="btn-icon btn-edit" onclick="abrirModal(${i})" title="Editar"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn-icon btn-copy" onclick="duplicarProduto(${i})" title="Duplicar"><i class="fa-solid fa-copy"></i></button>
+              <button class="btn-icon btn-delete" onclick="removerProduto(${i})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(produtos));
+      }
+      document.getElementById('formProduto').onsubmit = (e) => {
+        e.preventDefault();
+        const index = parseInt(document.getElementById('editIndex').value);
+        const novo = {
+          nome: document.getElementById('prodNome').value,
+          categoria: document.getElementById('prodCat').value,
+          preco: parseFloat(document.getElementById('prodPreco').value),
+          ficha: document.getElementById('prodFicha').value
+        };
+        if (index > -1) {
+          produtos[index] = novo;
+        } else {
+          produtos.push(novo);
+        }
+        render();
+        fecharModal();
+      };
+      window.duplicarProduto = (i) => {
+        const original = produtos[i];
+        const copia = { ...original, nome: original.nome + " (Cópia)" };
+        produtos.splice(i + 1, 0, copia);
+        render();
+      };
+      window.removerProduto = (i) => {
+        if (confirm("Deseja excluir este bolo do catálogo?")) {
+          produtos.splice(i, 1);
+          render();
+        }
+      };
+      if (window.DelikAuth) window.DelikAuth.requireAuth();
+      render();
+    })();
+  </script>
+</body>
+</html>

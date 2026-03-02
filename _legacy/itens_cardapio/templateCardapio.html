@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="[DESCRIÇÃO CURTA PARA O GOOGLE - EX: Torta artesanal perfeita para festas]">
+  <title>[NOME DO PRODUTO] | Deliká Bolos e Doces</title>
+  <link rel="icon" href="../img/logodlk.webp" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <!-- Estilos e Scripts: Usar '../' porque estamos dentro da pasta itens_cardapio -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="item-style.css">
+  <script src="../script.js" defer></script>
+</head>
+<body>
+  <!-- HEADER GLOBAL LIMPO -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="../index.html"><img src="../img/logodlk.webp" alt="Logotipo Deliká" loading="lazy"></a>
+      </div>
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <ul class="nav-links">
+        <li><a href="../cardapio.html" class="btn-nav"><i class="fa-solid fa-cookie-bite"></i> Cardápio</a></li>
+        <li><a href="../index.html#sobre" class="btn-nav"><i class="fa-solid fa-user"></i> Sobre Nós</a></li>
+        <li>
+          <a href="https://wa.me/5511974757194" class="btn-whatsapp" target="_blank" rel="noopener">
+            <img src="../img/Digital_Glyph_Green.svg" alt="WhatsApp" width="20" height="20"> Fazer Pedido
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ÁREA EXCLUSIVA DO PRODUTO -->
+  <section class="produto-detalhe">
+    <div class="produto-imagem">
+      <!-- 1. ALTERA A IMAGEM AQUI -->
+      <img src="../img/[NOME_DA_IMAGEM]-preview.jpg" alt="Foto do Produto" loading="lazy">
+    </div>
+    
+    <div class="produto-info">
+      <!-- 2. ALTERA OS DADOS AQUI -->
+      <h1>[NOME DO PRODUTO]</h1>
+      <p>[DESCRIÇÃO LONGA E APETITOSA. Ex: Sobremesa com creme de limão e cobertura especial. Perfeita para encantar o paladar e finalizar qualquer refeição.]</p>
+      <p class="produto-preco">R$ [00,00]</p>
+      
+      <!-- 3. MENSAGEM AUTOMÁTICA NO WHATSAPP -->
+      <a href="https://wa.me/5511974757194?text=Olá,%20gostaria%20de%20encomendar%20o%20[NOME_DO_PRODUTO]" class="btn-primary" target="_blank" rel="noopener">
+        <img src="../img/Digital_Glyph_Green.svg" alt="WhatsApp" width="24" height="24"> Encomendar Agora
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER GLOBAL LIMPO (Sem inline CSS) -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>Sobre a Deliká</h3>
+        <p>Tradição e sabor em cada fatia. Confeitaria artesanal para tornar os teus momentos especiais.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Contatos</h3>
+        <ul>
+          <li><img src="../img/Digital_Glyph_Green.svg" alt="WhatsApp" width="16" height="16"> 11 97475-7194</li>
+          <li><i class="fa-regular fa-clock"></i> Seg a Sáb, 09h às 18h</li>
+          <li><i class="fa-solid fa-location-dot"></i> Av. dos Jacarandás, 800<br>Embu-Guaçu - SP</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Redes Sociais</h3>
+        <div class="social-links">
+          <a href="https://www.instagram.com/bolosdelika/" target="_blank" rel="noopener">
+            <img src="../img/Instagram_Glyph_Gradient.webp" alt="Instagram" width="24" height="24"> @bolosdelika
+          </a>
+          <a href="https://www.facebook.com/people/Delik%C3%A1-Bolos-e-Doces/100063547686174/" target="_blank" rel="noopener">
+            <img src="../img/Facebook_Logo_Primary.webp" alt="Facebook" width="24" height="24"> Facebook
+          </a>
+        </div>
+      </div>
+      <div class="footer-col avaliacoes-google">
+        <h3>Aprovação 5 Estrelas</h3>
+        <p class="mais-clientes">+324 clientes avaliaram</p>
+        <div class="estrelas-footer">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p><strong>5.0</strong> de satisfação no Google.</p>
+        <a href="https://g.page/r/Cd3jwy6AxhOPEBM/review" target="_blank" rel="noopener" class="btn-review">Ler avaliações</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <small>&copy; 2026 Deliká Bolos e Doces. Todos os direitos reservados. <a href="../adm/login.html" class="admin-link" aria-label="Acesso Restrito">??</a></small>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5511974757194" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <img src="../img/Digital_Glyph_Green.svg" alt="Ícone do WhatsApp" width="35" height="35" loading="lazy">
+  </a>
+</body>
+</html>
+
+

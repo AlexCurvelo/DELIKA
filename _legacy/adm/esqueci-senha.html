@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Recuperar Senha | Deliká ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    .recovery-container {
+      display: flex;
+      min-height: 100vh;
+      background: var(--fundo-site);
+    }
+    .recovery-side {
+      flex: 1;
+      background: linear-gradient(135deg, var(--roxo-escuro) 0%, var(--roxo-delika) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      color: white;
+      text-align: center;
+    }
+    .recovery-side img {
+      width: 120px;
+      margin-bottom: 30px;
+    }
+    .recovery-side h1 {
+      font-family: 'Playfair Display';
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--dourado);
+    }
+    .recovery-side p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 400px;
+    }
+    .recovery-form {
+      width: 400px;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: white;
+    }
+    .recovery-form h2 {
+      font-family: 'Playfair Display';
+      color: var(--roxo-escuro);
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+    .recovery-form p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 25px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--roxo-escuro);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--roxo-delika);
+    }
+    .btn-recovery {
+      background: var(--roxo-delika);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn-recovery:hover {
+      background: var(--roxo-escuro);
+    }
+    .back-login {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .back-login a {
+      color: var(--roxo-delika);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-login a:hover {
+      text-decoration: underline;
+    }
+    .success-message {
+      background: var(--verde-sucesso);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      display: none;
+    }
+    .error-message {
+      background: var(--vermelho-erro);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="recovery-container">
+    <!-- Lado esquerdo - Branding -->
+    <div class="recovery-side">
+      <img src="../img/logodlk.png" alt="Deliká Bolos e Doces">
+      <h1>Deliká</h1>
+      <p>Sistema Administrativo - Recuperação de Senha</p>
+    </div>
+
+    <!-- Lado direito - Formulário -->
+    <div class="recovery-form">
+      <div id="successMessage" class="success-message">
+        <i class="fa-solid fa-check-circle"></i> Email de recuperação enviado com sucesso!
+      </div>
+      
+      <div id="errorMessage" class="error-message">
+        <i class="fa-solid fa-triangle-exclamation"></i> Email não encontrado no sistema.
+      </div>
+
+      <h2>Recuperar Senha</h2>
+      <p>Digite seu email para receber instruções de recuperação</p>
+
+      <form id="recoveryForm">
+        <div class="form-group">
+          <label for="email">Email cadastrado</label>
+          <input type="email" id="email" required placeholder="seu@email.com">
+        </div>
+
+        <button type="submit" class="btn-recovery">
+          <i class="fa-solid fa-paper-plane"></i> Enviar Instruções
+        </button>
+      </form>
+
+      <div class="back-login">
+        <a href="login.html"><i class="fa-solid fa-arrow-left"></i> Voltar para o login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('recoveryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const usuarios = JSON.parse(localStorage.getItem('delika_admin_users')) || [];
+      
+      // Simular envio de email (em produção, integraria com serviço de email)
+      const usuarioExiste = usuarios.some(user => user.email === email);
+      
+      if (usuarioExiste) {
+        // Mostrar mensagem de sucesso
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('errorMessage').style.display = 'none';
+        
+        // Simular delay e redirecionar
+        setTimeout(() => {
+          alert('ðŸ“§ Email simulado: Instruções de recuperação enviadas para ' + email);
+          window.location.href = 'login.html';
+        }, 2000);
+      } else {
+        // Mostrar mensagem de erro
+        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('successMessage').style.display = 'none';
+      }
+    });
+
+    // Limpar mensagens ao digitar
+    document.getElementById('email').addEventListener('input', function() {
+      document.getElementById('successMessage').style.display = 'none';
+      document.getElementById('errorMessage').style.display = 'none';
+    });
+  </script>
+</body>
+</html>

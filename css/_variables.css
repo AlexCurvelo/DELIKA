@@ -1,0 +1,20 @@
+:root {
+  /* Cores Principais */
+  --roxo-delika: #6b2d8c;
+  --roxo-escuro: #311440;
+  --lilas-claro: #f3e5f5;
+  --dourado: #d4af37;
+  
+  /* Cores Funcionais */
+  --verde-sucesso: #25d366;
+  --vermelho-erro: #ff6b6b;
+  
+  /* Cores Neutras */
+  --texto-base: #333333;
+  --fundo-branco: #ffffff;
+  --fundo-site: #faf7fc;
+  
+  /* Efeitos */
+  --sombra-card: 0 10px 30px rgba(49, 20, 64, 0.12);
+  --transicao-padrao: all 0.3s ease;
+}

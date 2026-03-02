@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Gestão da Loja | Deliká ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    .gestao-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    .gestao-card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--roxo-delika);
+    }
+    .gestao-card h3 {
+      font-family: 'Playfair Display';
+      color: var(--roxo-escuro);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .config-item {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: var(--lilas-claro);
+      border-radius: 10px;
+    }
+    .config-item label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--roxo-escuro);
+    }
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      margin-bottom: 10px;
+    }
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    .btn-salvar {
+      background: var(--verde-sucesso);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--verde-sucesso);
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/logodlk.png" alt="Deliká">
+      <h2>Painel ADM</h2>
+    </div>
+    <ul class="nav-menu">
+      <li class="menu-divisor">Principal</li>
+      <li><a href="painel.html"><i class="fa-solid fa-chart-pie"></i> Visão Geral</a></li>
+      <li><a href="pedidos.html"><i class="fa-solid fa-list-check"></i> Pedidos</a></li>
+      <li><a href="produtos.html"><i class="fa-solid fa-cake-candles"></i> Meus Bolos</a></li>
+      <li><a href="clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      <li class="menu-divisor">Gestão & Operação</li>
+      <li><a href="estoque.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
+      <li><a href="custos.html"><i class="fa-solid fa-coins"></i> Custos</a></li>
+      <li class="menu-divisor">Loja</li>
+      <li><a href="lojagest.html" class="ativo"><i class="fa-solid fa-gear"></i> ADM Loja</a></li>
+      <li><a href="gestao-cardapio.html"><i class="fa-solid fa-utensils"></i> Gestão Cardápio</a></li>
+      <li><a href="../cardapio.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-store"></i> Ver Loja Pública</a></li>
+      <li class="menu-divisor">Configurações</li>
+      <li><a href="config.html"><i class="fa-solid fa-user-gear"></i> Gerenciar Acessos</a></li>
+    </ul>
+    <div class="logout-btn">
+      <a href="login.html" data-logout="true"><i class="fa-solid fa-right-from-bracket"></i> Sair do Sistema</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <h1>Gestão da Loja Online</h1>
+      <div class="user-profile"><span>Modo Administrador</span><i class="fa-solid fa-circle-user"></i></div>
+    </div>
+
+    <div class="gestao-container">
+      <!-- Configurações Básicas -->
+      <div class="gestao-card">
+        <h3><i class="fa-solid fa-store"></i> Informações da Loja</h3>
+        <div class="config-item">
+          <label>Nome da Loja</label>
+          <input type="text" id="nomeLoja" placeholder="Deliká Confeitaria">
+        </div>
+        <div class="config-item">
+          <label>WhatsApp para Pedidos</label>
+          <input type="text" id="whatsappLoja" placeholder="+55 (11) 99999-9999">
+        </div>
+        <div class="config-item">
+          <label>Horário de Funcionamento</label>
+          <input type="text" id="horarioLoja" placeholder="Seg a Sex: 8h-18h | Sáb: 8h-12h">
+        </div>
+        <button class="btn-salvar" onclick="salvarConfigLoja()">Salvar Configurações</button>
+      </div>
+
+      <!-- SEO e Metatags -->
+      <div class="gestao-card">
+        <h3><i class="fa-solid fa-magnifying-glass"></i> SEO Otimização</h3>
+        <div class="config-item">
+          <label>Meta Title</label>
+          <input type="text" id="metaTitle" placeholder="Deliká - Bolos Artesanais Personalizados">
+        </div>
+        <div class="config-item">
+          <label>Meta Description</label>
+          <textarea id="metaDescription" placeholder="Descrição para mecanismos de busca..."></textarea>
+        </div>
+        <div class="config-item">
+          <label>Palavras-chave (Keywords)</label>
+          <input type="text" id="metaKeywords" placeholder="bolo, confeitaria, doce, artesanal">
+        </div>
+        <button class="btn-salvar" onclick="salvarSEO()">Salvar SEO</button>
+      </div>
+
+      <!-- Configurações de Exibição -->
+      <div class="gestao-card">
+        <h3><i class="fa-solid fa-palette"></i> Aparência</h3>
+        <div class="config-item">
+          <label>Tema de Cores</label>
+          <select id="temaCores">
+            <option value="padrao">Padrão (Roxo/Dourado)</option>
+            <option value="claro">Claro</option>
+            <option value="escuro">Escuro</option>
+            <option value="pastel">Pastel</option>
+          </select>
+        </div>
+        <div class="config-item">
+          <label>Logo da Loja (URL)</label>
+          <input type="text" id="logoUrl" placeholder="../img/logodlk.png ou https://..." 
+                 oninput="atualizarPreviewLogo(this.value)">
+          
+          <!-- Elemento de Preview -->
+          <div class="image-preview" style="margin-top: 10px; text-align: center;">
+            <img 
+              id="previewLogo" 
+              src="../img/logodlk.png" 
+              alt="Pré-visualização do Logo"
+              style="max-width: 100px; max-height: 100px; border-radius: 8px; border: 2px dashed #ddd;"
+              onerror="this.src='../img/erro-carregamento.jpg'">
+          </div>
+        </div>
+        <div class="config-item">
+          <label style="display: inline-block; margin-right: 10px;">Manutenção</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="modoManutencao">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <button class="btn-salvar" onclick="salvarAparencia()">Salvar Aparência</button>
+      </div>
+
+      <!-- Integrações -->
+      <div class="gestao-card">
+        <h3><i class="fa-solid fa-plug"></i> Integrações</h3>
+        <div class="config-item">
+          <label>Google Analytics ID</label>
+          <input type="text" id="gaId" placeholder="G-XXXXXXXXXX">
+        </div>
+        <div class="config-item">
+          <label>Facebook Pixel ID</label>
+          <input type="text" id="fbPixelId" placeholder="XXXXXXXXXXXXXXX">
+        </div>
+        <div class="config-item">
+          <label>API Key WhatsApp</label>
+          <input type="text" id="whatsappApiKey" placeholder="Sua chave API">
+        </div>
+        <button class="btn-salvar" onclick="salvarIntegracoes()">Salvar Integrações</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="adm-auth.js"></script>
+  <script>
+    const STORAGE_KEY = "delika_loja_config";
+
+    // Carregar configurações salvas
+    function carregarConfiguracoes() {
+      const config = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      
+      // Preencher formulários
+      document.getElementById('nomeLoja').value = config.nomeLoja || '';
+      document.getElementById('whatsappLoja').value = config.whatsappLoja || '';
+      document.getElementById('horarioLoja').value = config.horarioLoja || '';
+      
+      document.getElementById('metaTitle').value = config.metaTitle || '';
+      document.getElementById('metaDescription').value = config.metaDescription || '';
+      document.getElementById('metaKeywords').value = config.metaKeywords || '';
+      
+      document.getElementById('temaCores').value = config.temaCores || 'padrao';
+      document.getElementById('logoUrl').value = config.logoUrl || '../img/logodlk.png';
+      document.getElementById('modoManutencao').checked = config.modoManutencao || false;
+      
+      document.getElementById('gaId').value = config.gaId || '';
+      document.getElementById('fbPixelId').value = config.fbPixelId || '';
+      document.getElementById('whatsappApiKey').value = config.whatsappApiKey || '';
+    }
+
+    // Funções de salvamento
+    window.salvarConfigLoja = function() {
+      const config = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      config.nomeLoja = document.getElementById('nomeLoja').value;
+      config.whatsappLoja = document.getElementById('whatsappLoja').value;
+      config.horarioLoja = document.getElementById('horarioLoja').value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+      alert('Configurações da loja salvas!');
+    };
+
+    window.salvarSEO = function() {
+      const config = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      config.metaTitle = document.getElementById('metaTitle').value;
+      config.metaDescription = document.getElementById('metaDescription').value;
+      config.metaKeywords = document.getElementById('metaKeywords').value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+      alert('Configurações SEO salvas!');
+    };
+
+    window.salvarAparencia = function() {
+      const config = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      config.temaCores = document.getElementById('temaCores').value;
+      config.logoUrl = document.getElementById('logoUrl').value;
+      config.modoManutencao = document.getElementById('modoManutencao').checked;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+      alert('Configurações de aparência salvas!');
+    };
+
+    window.salvarIntegracoes = function() {
+      const config = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      config.gaId = document.getElementById('gaId').value;
+      config.fbPixelId = document.getElementById('fbPixelId').value;
+      config.whatsappApiKey = document.getElementById('whatsappApiKey').value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+      alert('Configurações de integração salvas!');
+    };
+
+    // Função Live Preview
+    function atualizarPreviewLogo(valorInput) {
+      const preview = document.getElementById('previewLogo');
+      
+      // Campo vazio - restaurar placeholder
+      if (!valorInput || valorInput.trim() === '') {
+        preview.src = '../img/logodlk.png';
+        return;
+      }
+      
+      const valor = valorInput.trim();
+      
+      // URL externa (http/https)
+      if (valor.toLowerCase().startsWith('http')) {
+        preview.src = valor;
+      } 
+      // Caminho relativo local
+      else {
+        preview.src = valor.startsWith('../') ? valor : '../img/' + valor;
+      }
+    }
+
+    // Inicializar preview com valor existente (se houver)
+    function inicializarPreviewLogo() {
+      const inputLogo = document.getElementById('logoUrl');
+      if (inputLogo && inputLogo.value) {
+        atualizarPreviewLogo(inputLogo.value);
+      }
+    }
+
+    // Inicializar
+    if (window.DelikAuth) window.DelikAuth.requireAuth();
+    carregarConfiguracoes();
+    inicializarPreviewLogo();
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Dashboard | Deliká ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Ícones adicionais -->
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    :root {
+      --roxo-delika: #6b2d8c;
+      --roxo-escuro: #311440;
+      --dourado: #d4af37;
+      --lilas-claro: #f3e5f5;
+      --fundo-site: #f4f6f8;
+      --texto-base: #333333;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Urbanist", sans-serif; background-color: var(--fundo-site); color: var(--texto-base); display: flex; min-height: 100vh; }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 900; }
+    .mobile-overlay.open { display: block; }
+    .sidebar { width: 260px; background: var(--roxo-escuro); color: #fff; display: flex; flex-direction: column; position: fixed; inset: 0 auto 0 0; box-shadow: 4px 0 16px rgba(0, 0, 0, 0.14); z-index: 1000; }
+    .sidebar-header { padding: 26px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); text-align: center; }
+    .sidebar-header img { width: 94px; margin-bottom: 10px; }
+    .sidebar-header h2 { font-family: "Playfair Display", serif; color: var(--dourado); font-size: 1.15rem; font-weight: 700; }
+    .nav-menu { list-style: none; flex: 1; padding: 18px 0; overflow-y: auto; }
+    .nav-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 22px; color: #d7d7d7; text-decoration: none; font-weight: 600; transition: background 0.2s ease, color 0.2s ease; }
+    .nav-menu a:hover, .nav-menu a.ativo { background: rgba(255, 255, 255, 0.12); color: var(--dourado); border-left: 4px solid var(--dourado); }
+    .nav-menu i { width: 18px; text-align: center; }
+    .logout-btn { padding: 18px 22px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .logout-btn a { color: #ff8f8f; text-decoration: none; display: inline-flex; gap: 8px; align-items: center; font-weight: 700; }
+    .logout-btn a:hover { color: #ff6d6d; }
+    .main-content { margin-left: 260px; flex: 1; padding: 32px 36px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; gap: 16px; }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .menu-toggle { display: none; border: none; border-radius: 8px; width: 38px; height: 38px; background: var(--roxo-delika); color: #fff; cursor: pointer; }
+    .topbar h1 { font-family: "Playfair Display", serif; font-size: 2rem; color: var(--roxo-escuro); }
+    .user-profile { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--roxo-escuro); font-size: 0.96rem; }
+    .user-profile i { color: var(--dourado); font-size: 1.85rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; margin-bottom: 32px; }
+    .stat-card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06); border-left: 5px solid var(--roxo-delika); display: flex; justify-content: space-between; gap: 14px; }
+    .stat-card.gold { border-left-color: var(--dourado); }
+    .stat-info h3 { font-size: 0.9rem; color: #777; margin-bottom: 6px; font-weight: 600; }
+    .stat-info p { font-size: 1.8rem; color: var(--roxo-escuro); font-weight: 700; }
+    .stat-icon { width: 46px; height: 46px; border-radius: 999px; display: flex; align-items: center; justify-content: center; color: var(--roxo-delika); background: rgba(107, 45, 140, 0.1); flex-shrink: 0; }
+    .stat-card.gold .stat-icon { background: rgba(212, 175, 55, 0.12); color: var(--dourado); }
+    .quick-actions { background: #fff; border-radius: 14px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06); padding: 26px 24px; }
+    .quick-actions h2 { font-family: "Playfair Display", serif; color: var(--roxo-escuro); margin-bottom: 16px; font-size: 1.42rem; }
+    .action-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-action { text-decoration: none; display: inline-flex; align-items: center; gap: 9px; border-radius: 9px; padding: 11px 16px; font-weight: 700; font-size: 0.95rem; transition: transform 0.18s ease, filter 0.18s ease; }
+    .btn-action.primary { background: var(--dourado); color: var(--roxo-escuro); }
+    .btn-action.secondary { background: var(--lilas-claro); color: var(--roxo-escuro); }
+    .btn-action:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    @media (max-width: 860px) {
+      .main-content { margin-left: 0; padding: 22px 16px; }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .sidebar { transform: translateX(-100%); transition: transform 0.22s ease; }
+      .sidebar.open { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="mobileOverlay" class="mobile-overlay" aria-hidden="true"></div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/logodlk.png" alt="Logo Delika">
+      <h2>Painel ADM</h2>
+    </div>
+    <ul class="nav-menu">
+      <li class="menu-divisor">Principal</li>
+      <li><a href="painel.html" class="ativo"><i class="fa-solid fa-chart-pie"></i> Visão Geral</a></li>
+      <li><a href="pedidos.html"><i class="fa-solid fa-list-check"></i> Pedidos (Kanban)</a></li>
+      <li><a href="produtos.html"><i class="fa-solid fa-cake-candles"></i> Meus Bolos</a></li>
+      <li><a href="clientes.html"><i class="fa-solid fa-users"></i> Clientes (CRM)</a></li>
+      <li class="menu-divisor">Gestão & Operação</li>
+      <li><a href="estoque.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
+      <li><a href="custos.html"><i class="fa-solid fa-coins"></i> Custos e Ficha Técnica</a></li>
+      <li class="menu-divisor">Loja</li>
+      <li><a href="lojagest.html"><i class="fa-solid fa-gear"></i> ADM Loja</a></li>
+      <li><a href="../cardapio.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-store"></i> Ver Loja Pública</a></li>
+      <li class="menu-divisor">Configurações</li>
+      <li><a href="config.html"><i class="fa-solid fa-user-gear"></i> Gerenciar Acessos</a></li>
+    </ul>
+    <div class="logout-btn">
+      <a href="login.html" data-logout="true"><i class="fa-solid fa-right-from-bracket"></i> Sair do Sistema</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button id="menuToggle" class="menu-toggle" type="button" aria-label="Abrir menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1>Olá, Chef Karina</h1>
+      </div>
+      <div class="user-profile">
+        <span>Modo Administrador</span>
+        <i class="fa-solid fa-circle-user"></i>
+      </div>
+    </div>
+
+    <section class="stats-grid" aria-label="Resumo">
+      <article class="stat-card">
+        <div class="stat-info">
+          <h3>Total de Produtos</h3>
+          <p>44</p>
+        </div>
+        <div class="stat-icon"><i class="fa-solid fa-box-open"></i></div>
+      </article>
+
+      <article class="stat-card gold">
+        <div class="stat-info">
+          <h3>Visitas Hoje (simulado)</h3>
+          <p>128</p>
+        </div>
+        <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-info">
+          <h3>Mensagens Recebidas</h3>
+          <p>12</p>
+        </div>
+        <div class="stat-icon"><i class="fa-brands fa-whatsapp"></i></div>
+      </article>
+    </section>
+
+    <section class="quick-actions" aria-label="Ações rápidas">
+      <h2>Ações Rápidas</h2>
+      <div class="action-buttons">
+        <a href="estoque.html" class="btn-action primary"><i class="fa-solid fa-truck-ramp-box"></i> Entrada de Insumo</a>
+        <a href="custos.html" class="btn-action secondary"><i class="fa-solid fa-coins"></i> Custos e Ficha Técnica</a>
+        <a href="../cardapio.html" target="_blank" rel="noopener noreferrer" class="btn-action secondary"><i class="fa-solid fa-store"></i> Ver Loja Online</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="adm-auth.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      if (!window.DelikAuth || !window.DelikAuth.requireAuth()) return;
+
+      var logoutLink = document.querySelector("[data-logout='true']");
+      if (logoutLink) logoutLink.addEventListener("click", function () { window.DelikAuth.logout(); });
+
+      var sidebar = document.getElementById("sidebar");
+      var menuToggle = document.getElementById("menuToggle");
+      var overlay = document.getElementById("mobileOverlay");
+
+      function closeMenu() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("open");
+      }
+      function openMenu() {
+        sidebar.classList.add("open");
+        overlay.classList.add("open");
+      }
+      menuToggle.addEventListener("click", function () {
+        if (sidebar.classList.contains("open")) closeMenu();
+        else openMenu();
+      });
+      overlay.addEventListener("click", closeMenu);
+      window.addEventListener("resize", function () { if (window.innerWidth > 860) closeMenu(); });
+    })();
+  </script>
+</body>
+</html>
+

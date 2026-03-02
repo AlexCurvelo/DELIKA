@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Fluxo de Produção | Deliká ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    /* ESTILOS DO KANBAN PRO */
+     .kanban-board { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; align-items: flex-start; }
+    .kanban-column { background: #ebedef; border-radius: 12px; min-width: 300px; max-width: 300px; display: flex; flex-direction: column; max-height: 80vh; }
+    .column-header { padding: 15px; font-weight: 700; color: var(--roxo-escuro); display: flex; justify-content: space-between; align-items: center; }
+    .kanban-list { padding: 10px; flex: 1; overflow-y: auto; min-height: 150px; }
+    .pedido-card { background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: grab; position: relative; border-top: 4px solid #ccc; }
+    .pedido-card.producao { border-top-color: #2196f3; }
+    .pedido-card.pendente { border-top-color: #ff9800; }
+    .pedido-card.concluido { border-top-color: var(--verde-sucesso); }
+    .card-header { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 5px; }
+    .card-title { font-weight: 700; color: var(--roxo-delika); margin-bottom: 10px; display: block; }
+    .card-info { font-size: 0.85rem; color: #555; margin-bottom: 10px; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 10px; }
+    .btn-produzir { background: var(--roxo-delika); color: #fff; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .btn-produzir:hover { background: var(--roxo-escuro); }
+    .badge-finance { background: #f3e5f5; color: var(--roxo-delika); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; }
+    /* Modal de Produção */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; place-items: center; z-index: 2000; padding: 20px; }
+    .modal.active { display: grid; }
+    .modal-content { background: #fff; padding: 30px; border-radius: 20px; width: 100%; max-width: 450px; }
+    .modal-content h2 { font-family: 'Playfair Display'; margin-bottom: 15px; color: var(--roxo-delika); }
+    .calc-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+    input[type="number"] { width: 80px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-header"><img src="../img/logodlk.png" alt="Deliká"><h2>Painel ADM</h2></div>
+    <ul class="nav-menu">
+      <li><a href="painel.html"><i class="fa-solid fa-chart-pie"></i> Visão Geral</a></li>
+      <li><a href="pedidos.html" class="ativo"><i class="fa-solid fa-list-check"></i> Pedidos</a></li>
+      <li><a href="produtos.html"><i class="fa-solid fa-cake-candles"></i> Meus Bolos</a></li>
+      <li><a href="clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      <li class="menu-divisor">Operação</li>
+       <li><a href="estoque.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
+      <li><a href="custos.html"><i class="fa-solid fa-coins"></i> Custos</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <div style="margin-bottom: 30px;">
+        <h1>Gestão de Encomendas</h1>
+        <p>Arraste para mudar o status ou inicie a produção para dar baixa no stock.</p>
+    </div>
+
+    <div class="kanban-board">
+        <div class="kanban-column">
+            <div class="column-header"><span>Pendentes</span> <span id="count-pendente">0</span></div>
+            <div class="kanban-list" id="list-pendente" ondrop="drop(event)" ondragover="allowDrop(event)" data-status="pendente"></div>
+        </div>
+        <div class="kanban-column">
+            <div class="column-header"><span>Em Produção ðŸ‘¨â€ðŸ³</span> <span id="count-producao">0</span></div>
+            <div class="kanban-list" id="list-producao" ondrop="drop(event)" ondragover="allowDrop(event)" data-status="producao"></div>
+        </div>
+        <div class="kanban-column">
+               <div class="column-header"><span>Entregue / Pago âœ…</span> <span id="count-concluido">0</span></div>
+            <div class="kanban-list" id="list-concluido" ondrop="drop(event)" ondragover="allowDrop(event)" data-status="concluido"></div>
+        </div>
+    </div>
+  </main>
+
+  <!-- MODAL INICIAR PRODUÃ‡ôO -->
+  <div class="modal" id="modalProducao">
+    <div class="modal-content">
+       <h2>Iniciar Produção</h2>
+      <p id="prod-nome-item" style="font-weight: 700; margin-bottom: 20px;"></p>
+      <div class="calc-row"><span>Custo de Matéria-Prima:</span> <strong id="prod-custo-base">R$ 0,00</strong></div>
+      <div class="calc-row"><span>Margem de Lucro (%):</span> <input type="number" id="prod-margem" value="100" oninput="recalcFinal()"></div>
+      <div class="calc-row" style="border-bottom: none; font-size: 1.2rem;"><span>Preço de Venda Final:</span> <strong style="color: var(--verde-sucesso)" id="prod-preco-final">R$ 0,00</strong></div>
+      <p style="font-size: 0.7rem; color: #888; margin-top: 15px;"><i class="fa-solid fa-triangle-exclamation"></i> Ao confirmar, o sistema reduzirá o stock real dos ingredientes desta receita.</p>
+      <button class="btn-action primary" onclick="confirmarProducao()" style="width: 100%; margin-top: 15px; padding: 15px; background: var(--verde-sucesso); border: none; color: #fff; font-weight: 700; border-radius: 10px; cursor: pointer;">CONFIRMAR E DAR BAIXA</button>
+      <button onclick="document.getElementById('modalProducao').classList.remove('active')" style="width: 100%; margin-top: 10px; background: none; border: none; color: #999; cursor: pointer;">Cancelar</button>
+    </div>
+  </div>
+
+  <script src="adm-auth.js"></script>
+  <script>
+    // TABELA DE CONVERSôO PARA BAIXA DE STOCK (Mapeia medidas de culinária para unidades base)
+    const CONVERSOES = {
+        'unid': 1, 'kg': 1, 'lt': 1, 'g': 0.001, 'ml': 0.001,
+        'xicara': 0.250, 'meia_xicara': 0.125, 'terco_xicara': 0.083, 'quarto_xicara': 0.062,
+        'sopa': 0.015, 'cha': 0.005, 'cafe': 0.002
+    };
+
+    let pedidos = JSON.parse(localStorage.getItem("pedidosDelika")) || [];
+    let estoque = JSON.parse(localStorage.getItem("delika_inventory_v5")) || [];
+    let receitas = JSON.parse(localStorage.getItem("delika_recipes_v5")) || [];
+    let pedidoSendoProcessado = null;
+
+    function renderKanban() {
+        const statuses = ['pendente', 'producao', 'concluido'];
+        statuses.forEach(status => {
+            const list = document.getElementById(`list-${status}`);
+            list.innerHTML = "";
+            const filtrados = pedidos.filter(p => p.status === status);
+            document.getElementById(`count-${status}`).textContent = filtrados.length;
+            filtrados.forEach(p => {
+                const card = document.createElement('div');
+                card.className = `pedido-card ${status}`;
+                card.draggable = true;
+                card.ondragstart = (e) => e.dataTransfer.setData("text", p.id);
+                const badgeFinance = p.precoFinal ? `<span class="badge-finance">R$ ${p.precoFinal.toFixed(2)}</span>` : '';
+                const btnProd = (status === 'pendente') ? `<button class="btn-produzir" onclick="abrirModalProducao(${p.id})">PRODUZIR</button>` : '';
+                card.innerHTML = `
+                    <div class="card-header">#${p.id.toString().slice(-4)} | ${p.data}</div>
+                    <span class="card-title">${p.produto}</span>
+                    <div class="card-info"><i class="fa-regular fa-user"></i> ${p.cliente}</div>
+                    <div class="card-footer">${badgeFinance} ${btnProd}</div>
+                `;
+                list.appendChild(card);
+            });
+        });
+        localStorage.setItem("pedidosDelika", JSON.stringify(pedidos));
+    }
+
+    // LOGICA DA PONTE DE BAIXA
+    window.abrirModalProducao = (id) => {
+        const pedido = pedidos.find(p => p.id === id);
+        const receita = receitas.find(r => r.nome.toLowerCase() === pedido.produto.toLowerCase());
+        if(!receita) return alert("Erro: Não encontrei uma receita cadastrada com o nome '" + pedido.produto + "'. Crie a receita primeiro em 'Custos'.");
+        pedidoSendoProcessado = { pedido, receita };
+        document.getElementById('prod-nome-item').textContent = pedido.produto + " (Cliente: " + pedido.cliente + ")";
+        document.getElementById('prod-custo-base').textContent = `R$ ${receita.custo.toFixed(2)}`;
+        recalcFinal();
+        document.getElementById('modalProducao').classList.add('active');
+    };
+
+    function recalcFinal() {
+        const custo = pedidoSendoProcessado.receita.custo;
+        const margem = parseFloat(document.getElementById('prod-margem').value) / 100;
+        const final = custo + (custo * (margem / 100));
+        document.getElementById('prod-preco-final').textContent = `R$ ${final.toFixed(2)}`;
+    }
+
+    window.confirmarProducao = () => {
+        const { pedido, receita } = pedidoSendoProcessado;
+        // 1. DEDUZIR DO ESTOQUE
+        receita.itens.forEach(ing => {
+            const itemEstoque = estoque.find(i => i.id == ing.insumoId);
+            if (itemEstoque) {
+                const fator = CONVERSOES[ing.medida] || 1;
+                const qtdADeduzir = ing.qtd * fator;
+                itemEstoque.quantidade -= qtdADeduzir;
+            }
+        });
+        // 2. ATUALIZAR PEDIDO
+        const margem = parseFloat(document.getElementById('prod-margem').value);
+        pedido.status = 'producao';
+        pedido.custoProducao = receita.custo;
+        pedido.precoFinal = receita.custo + (receita.custo * (margem / 100));
+        pedido.provisionado = true; // Tag para o financeiro futuro
+        localStorage.setItem("delika_inventory_v5", JSON.stringify(estoque));
+        renderKanban();
+        document.getElementById('modalProducao').classList.remove('active');
+        alert("Produção Iniciada! Stock atualizado.");
+    };
+
+    // DRAG AND DROP NATIVO
+    window.allowDrop = (e) => e.preventDefault();
+    window.drop = (e) => {
+        e.preventDefault();
+        const id = e.dataTransfer.getData("text");
+        const status = e.target.closest('.kanban-list').dataset.status;
+        const pedido = pedidos.find(p => p.id == id);
+        if(status === 'producao' && !pedido.provisionado) {
+            return abrirModalProducao(pedido.id);
+        }
+        pedido.status = status;
+        renderKanban();
+    };
+
+    if (window.DelikAuth) window.DelikAuth.requireAuth();
+    renderKanban();
+  </script>
+</body>
+</html>

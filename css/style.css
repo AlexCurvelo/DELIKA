@@ -1,0 +1,435 @@
+/* ==========================================================================
+   STYLE.CSS - Arquivo principal de estilos da Deliká
+   ========================================================================== */
+
+/* Importações */
+@import url('_variables.css');
+@import url('_optimizations.css');
+
+/* Reset e Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Urbanist', sans-serif;
+  line-height: 1.6;
+  color: var(--texto-base);
+  background: var(--fundo-site);
+  overflow-x: hidden;
+}
+
+/* Tipografia */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+p { margin-bottom: 1rem; }
+
+/* Layout Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header e Navegação */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 1rem 0;
+  transition: var(--transicao-padrao);
+  box-shadow: var(--sombra-card);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 80px;
+  width: auto;
+  transition: var(--transicao-padrao);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--roxo-delika);
+}
+
+/* Botões */
+.btn-nav, .btn-whatsapp, .btn-primary, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transicao-padrao);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-nav {
+  background: transparent;
+  color: var(--roxo-delika);
+  border: 2px solid transparent;
+}
+
+.btn-nav:hover {
+  border-color: var(--roxo-delika);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  background: var(--verde-sucesso);
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.btn-whatsapp:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--roxo-delika);
+  color: white;
+  font-size: 1.1rem;
+}
+
+.btn-primary:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--roxo-delika);
+  border: 2px solid var(--roxo-delika);
+}
+
+.btn-secondary:hover {
+  background: var(--roxo-delika);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 1rem 80px;
+  background: linear-gradient(135deg, var(--roxo-escuro) 0%, var(--roxo-delika) 100%);
+  color: white;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+/* Menu Cards Grid */
+.cardapio-grid, .menu-completo {
+  display: grid;
+  gap: 2rem;
+  padding: 4rem 1rem;
+}
+
+.cardapio-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.menu-completo {
+  grid-template-columns: 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.menu-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: var(--sombra-card);
+  margin-bottom: 2rem;
+}
+
+/* Menu Items */
+.menu-item {
+  display: block;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: var(--transicao-padrao);
+}
+
+.menu-item:hover {
+  color: var(--roxo-delika);
+  transform: translateX(5px);
+}
+
+.menu-item-name {
+  font-weight: 600;
+}
+
+.menu-item-dots {
+  flex: 1;
+  border-bottom: 1px dotted #ccc;
+  margin: 0 0.5rem;
+}
+
+.menu-item-price {
+  font-weight: 700;
+  color: var(--roxo-delika);
+}
+
+/* Footer */
+footer {
+  background: var(--roxo-escuro);
+  color: white;
+  padding: 3rem 1rem 1rem;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-col h3 {
+  color: var(--dourado);
+  margin-bottom: 1rem;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: var(--transicao-padrao);
+}
+
+.social-links a:hover {
+  color: var(--dourado);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* WhatsApp Float */
+.whatsapp-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--verde-sucesso);
+  border-radius: 50%;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: var(--transicao-padrao);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Cart Styles */
+.cart-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  color: var(--roxo-delika);
+}
+
+.cart-checkbox {
+  width: 18px;
+  height: 18px;
+}
+
+/* Modal Carrinho */
+.carrinho-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+}
+
+.carrinho-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--roxo-delika);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 1rem;
+    display: none;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+  
+  .logo img {
+    height: 60px;
+  }
+  
+  .hero {
+    padding: 100px 1rem 60px;
+  }
+  
+  .cardapio-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .whatsapp-float {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .whatsapp-float img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+  
+  .btn-nav, .btn-primary, .btn-secondary {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .menu-card {
+    padding: 1rem;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Estados de loading */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Utilidades */
+.text-center { text-align: center; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+
+.hidden { display: none; }
+.visible { display: block; }

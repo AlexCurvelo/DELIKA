@@ -1,0 +1,14 @@
+/* Otimizações de Performance e SEO */
+
+/* Preload para fonts críticas */
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap">
+</noscript>
+
+/* Critical CSS Inline */
+<style>
+  .logo img { height: 110px; width: auto; }
+  .hero { min-height: 70vh; display: grid; place-items: center; }
+  .hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 4rem); }
+</style>

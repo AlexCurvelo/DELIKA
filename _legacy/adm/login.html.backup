@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Acesso Restrito | Delika ADM</title>
+  <link rel="icon" href="../img/logodlk.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="adm-style.css">
+  <style>
+    :root {
+      --texto-claro: #ffffff;
+      --texto-secundario: #c7b9ce;
+      --erro: #ff7a7a;
+    }
+    body {
+      background:
+        radial-gradient(circle at 85% 15%, rgba(212, 175, 55, 0.14), transparent 42%),
+        var(--roxo-escuro);
+      color: var(--texto-claro);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 20px;
+      padding: 38px 28px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+      backdrop-filter: blur(10px);
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+    .login-logo {
+      width: 112px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-family: "Playfair Display", serif;
+      color: var(--dourado);
+      font-size: 1.95rem;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: var(--texto-secundario);
+      font-size: 0.95rem;
+    }
+    .form-group {
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .form-group i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8f7a98;
+      pointer-events: none;
+    }
+    .form-control {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--texto-claro);
+      padding: 13px 14px 13px 42px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-control::placeholder {
+      color: #8f7a98;
+    }
+
+    .form-control:focus {
+      border-color: var(--dourado);
+    }
+
+    .btn-login {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--roxo-escuro);
+      background: var(--dourado);
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .btn-login:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .btn-login:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .feedback {
+      min-height: 22px;
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .feedback.error {
+      color: var(--erro);
+    }
+
+    .feedback.success {
+      color: var(--sucesso);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      color: var(--texto-secundario);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--dourado);
+    }
+  </style>
+</head>
+<body>
+  <main class="login-card">
+    <header class="login-header">
+      <img src="../img/logodlk.png" alt="Logo Delika" class="login-logo">
+      <h1>Painel de Controle</h1>
+      <p class="subtitle">Area restrita da administracao</p>
+    </header>
+
+    <form id="formLogin" autocomplete="off">
+      <div class="form-group">
+        <i class="fa-solid fa-user"></i>
+        <input class="form-control" id="usuario" name="usuario" type="text" placeholder="Usuario" required>
+      </div>
+      <div class="form-group">
+        <i class="fa-solid fa-lock"></i>
+        <input class="form-control" id="senha" name="senha" type="password" placeholder="Senha" required>
+      </div>
+
+      <button id="btnEntrar" class="btn-login" type="submit">Entrar</button>
+      <p id="msgRetorno" class="feedback" role="status" aria-live="polite"></p>
+    </form>
+
+    <a href="../index.html" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i>
+      Voltar para a loja
+    </a>
+  </main>
+
+  <script src="adm-auth.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var MAX_ATTEMPTS = 5;
+      var LOCK_MS = 60 * 1000;
+      var ATTEMPT_KEY = "delika_adm_attempts_v1";
+
+      var form = document.getElementById("formLogin");
+      var userInput = document.getElementById("usuario");
+      var passInput = document.getElementById("senha");
+      var feedback = document.getElementById("msgRetorno");
+      var button = document.getElementById("btnEntrar");
+
+      if (window.DelikAuth && window.DelikAuth.getSession()) {
+        window.location.href = "painel.html";
+        return;
+      }
+
+      function parseJson(value) {
+        try {
+          return JSON.parse(value);
+        } catch (err) {
+          return {};
+        }
+      }
+
+      function readAttemptState() {
+        return parseJson(sessionStorage.getItem(ATTEMPT_KEY)) || {};
+      }
+
+      function writeAttemptState(state) {
+        sessionStorage.setItem(ATTEMPT_KEY, JSON.stringify(state));
+      }
+
+      function clearAttemptState() {
+        sessionStorage.removeItem(ATTEMPT_KEY);
+      }
+
+      function lockRemainingMs(state) {
+        var until = Number(state.lockedUntil || 0);
+        return Math.max(0, until - Date.now());
+      }
+
+      function setFeedback(text, kind) {
+        feedback.textContent = text;
+        feedback.className = "feedback " + (kind || "");
+      }
+
+      function applyLockState() {
+        var state = readAttemptState();
+        var remaining = lockRemainingMs(state);
+        if (remaining > 0) {
+          var sec = Math.ceil(remaining / 1000);
+          setFeedback("Muitas tentativas. Aguarde " + sec + "s.", "error");
+          button.disabled = true;
+          return true;
+        }
+        button.disabled = false;
+        return false;
+      }
+
+      setInterval(applyLockState, 1000);
+      applyLockState();
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        if (applyLockState()) {
+          return;
+        }
+
+        button.disabled = true;
+        setFeedback("Validando acesso...", "");
+
+        var ok = false;
+        try {
+          ok = await window.DelikAuth.login(userInput.value, passInput.value);
+        } catch (err) {
+          ok = false;
+        }
+
+        if (ok) {
+          clearAttemptState();
+          setFeedback("Acesso liberado. Redirecionando...", "success");
+          setTimeout(function () {
+            window.location.href = "painel.html";
+          }, 650);
+          return;
+        }
+
+        var state = readAttemptState();
+        var attempts = Number(state.attempts || 0) + 1;
+        if (attempts >= MAX_ATTEMPTS) {
+          writeAttemptState({
+            attempts: attempts,
+            lockedUntil: Date.now() + LOCK_MS
+          });
+          applyLockState();
+        } else {
+          writeAttemptState({ attempts: attempts, lockedUntil: 0 });
+          setFeedback("Usuario ou senha invalidos.", "error");
+          button.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
