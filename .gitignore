@@ -1,0 +1,49 @@
+# Deliká Bolos e Doces - .gitignore
+
+# ============================
+# Arquivos e Pastas do Sistema
+# ============================
+
+# Legacy (código antigo)
+_legacy/
+
+# Arquivos temporários
+*.tmp
+*.temp
+temp_*
+*.log
+*.bak
+*.backup
+
+# Arquivos de build
+build/
+dist/
+*.min.css
+*.min.js
+
+# Node/npm
+node_modules/
+package-lock.json
+npm-debug.log
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Imagens otimizadas/cache
+assets/thumbs/
+assets/cache/
+*.webp.bak
+
+# Scripts de automação
+scripts/legacy/
+
+# Documentação interna
+MANUAL_*.md
+PLANO_*.md
+*.notes.md

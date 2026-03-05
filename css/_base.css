@@ -1,0 +1,22 @@
+/* Base Styles - Deliká v2.0 */
+body {
+  font-family: var(--font-body);
+  color: var(--texto-base);
+  background-color: var(--fundo-site);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--roxo-escuro);
+  margin-bottom: var(--spacing-sm);
+}
+
+a {
+  color: var(--roxo-delika);
+  transition: var(--transicao-padrao);
+}
+
+a:hover {
+  color: var(--roxo-escuro);
+}
