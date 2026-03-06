@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos | Admin Deliká</title>
+  <link rel="icon" href="../assets/images/logodlk.webp" type="image/webp">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+
+  <style>
+    :root {
+      --roxo-delika: #6B2D8C;
+      --roxo-escuro: #311440;
+      --dourado: #D4AF37;
+      --lilas-claro: #F3E5F5;
+      --bg-site: #FAF7FC;
+      --text-dark: #2C2C2C;
+      --success: #25D366;
+      --warning: #FFA500;
+      --danger: #FF4757;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background: var(--bg-site);
+      color: var(--text-dark);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, var(--roxo-escuro) 0%, var(--roxo-delika) 100%);
+      color: white;
+      padding: 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
+
+    .sidebar-logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--dourado);
+    }
+
+    .sidebar-logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 5px;
+    }
+
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .sidebar-menu a.active {
+      background: var(--dourado);
+      color: var(--roxo-escuro);
+    }
+
+    .sidebar-menu i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .user-info {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+
+    .user-info .name {
+      font-weight: 700;
+    }
+
+    .user-info .logout {
+      color: var(--danger);
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--roxo-escuro);
+    }
+
+    .btn-primary {
+      background: var(--roxo-delika);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--roxo-escuro);
+      transform: translateY(-2px);
+    }
+
+    /* Search & Filters */
+    .filters {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px 12px 45px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--roxo-delika);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    .filter-select {
+      padding: 12px 20px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-family: 'Urbanist', sans-serif;
+      background: white;
+      cursor: pointer;
+    }
+
+    /* Products Table */
+    .table-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: var(--lilas-claro);
+      padding: 15px 20px;
+      text-align: left;
+      font-weight: 700;
+      color: var(--roxo-escuro);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .product-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid var(--lilas-claro);
+    }
+
+    .product-name {
+      font-weight: 600;
+      color: var(--roxo-escuro);
+    }
+
+    .product-category {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .price {
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    .badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-active {
+      background: #E8F5E9;
+      color: var(--success);
+    }
+
+    .badge-inactive {
+      background: #FFEBEE;
+      color: var(--danger);
+    }
+
+    .badge-featured {
+      background: #FFF8E1;
+      color: var(--dourado);
+    }
+
+    .visibility-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .visibility-visible {
+      background: var(--lilas-claro);
+      color: var(--roxo-delika);
+    }
+
+    .visibility-hidden {
+      background: #eee;
+      color: #888;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+      background: var(--lilas-claro);
+      color: var(--roxo-delika);
+    }
+
+    .btn-edit:hover {
+      background: var(--roxo-delika);
+      color: white;
+    }
+
+    .btn-delete {
+      background: #FFEBEE;
+      color: var(--danger);
+    }
+
+    .btn-delete:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .modal-header h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--roxo-escuro);
+    }
+
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--roxo-delika);
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--roxo-delika);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-end;
+      margin-top: 25px;
+    }
+
+    .btn-secondary {
+      background: #f5f5f5;
+      color: var(--text-dark);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #eee;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+      color: var(--roxo-escuro);
+      margin-bottom: 10px;
+    }
+
+    .empty-state p {
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 200;
+        background: var(--roxo-delika);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .stat-card .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--roxo-delika);
+    }
+
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile Menu Toggle -->
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('active')">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="../assets/images/logodlk.webp" alt="Deliká">
+      <h2>Admin Deliká</h2>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li><a href="painel.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="produtos.html" class="active"><i class="fas fa-birthday-cake"></i> Produtos</a></li>
+      <li><a href="pedidos.html"><i class="fas fa-shopping-bag"></i> Pedidos</a></li>
+      <li><a href="custos.html"><i class="fas fa-calculator"></i> Custos</a></li>
+      <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
+      <li><a href="estoque.html"><i class="fas fa-box"></i> Estoque</a></li>
+      <li><a href="config.html"><i class="fas fa-cog"></i> Configurações</a></li>
+    </ul>
+
+    <div class="user-info">
+      <div class="name"><i class="fas fa-user-circle"></i> <span id="userName">Karina</span></div>
+      <div class="logout" onclick="window.auth.logout()">
+        <i class="fas fa-sign-out-alt"></i> Sair
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="header">
+      <h1><i class="fas fa-birthday-cake"></i> Produtos</h1>
+      <button class="btn-primary" onclick="openModal()">
+        <i class="fas fa-plus"></i> Novo Produto
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="value" id="totalProducts">0</div>
+        <div class="label">Total de Produtos</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="activeProducts">0</div>
+        <div class="label">Ativos</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="visibleProducts">0</div>
+        <div class="label">Na Vitrine</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Buscar produtos..." oninput="filterProducts()">
+      </div>
+      <select class="filter-select" id="statusFilter" onchange="filterProducts()">
+        <option value="all">Todos Status</option>
+        <option value="ativo">Ativo</option>
+        <option value="inativo">Inativo</option>
+      </select>
+      <select class="filter-select" id="visibilityFilter" onchange="filterProducts()">
+        <option value="all">Todas Visualizações</option>
+        <option value="visible">Visível na Vitrine</option>
+        <option value="hidden">Oculto</option>
+      </select>
+    </div>
+
+    <!-- Products Table -->
+    <div class="table-container">
+      <table id="productsTable">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th>Preço</th>
+            <th>Status</th>
+            <th>Vitrine</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="productsList">
+          <!-- Products will be rendered here -->
+        </tbody>
+      </table>
+
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <i class="fas fa-box-open"></i>
+        <h3>Nenhum produto encontrado</h3>
+        <p>Comece cadastrando seus produtos</p>
+        <button class="btn-primary" onclick="openModal()">
+          <i class="fas fa-plus"></i> Cadastrar Produto
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Form -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Novo Produto</h2>
+        <button class="modal-close" onclick="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <input type="hidden" id="productId">
+
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="productName">Nome do Produto *</label>
+            <input type="text" id="productName" required placeholder="Ex: Bolo de Chocolate">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="productDescription">Descrição</label>
+            <textarea id="productDescription" rows="3" placeholder="Descrição do produto..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="productPrice">Preço (R$) *</label>
+            <input type="number" id="productPrice" step="0.01" min="0" required placeholder="85.00">
+          </div>
+
+          <div class="form-group">
+            <label for="productCategory">Categoria</label>
+            <select id="productCategory">
+              <option value="bolos">Bolos</option>
+              <option value="doces">Doces Finos</option>
+              <option value="sobremesas">Sobremesas</option>
+              <option value="salgados">Salgados</option>
+              <option value="bebidas">Bebidas</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="productImage">URL da Imagem</label>
+            <input type="url" id="productImage" placeholder="../assets/images/produto.jpg">
+          </div>
+
+          <div class="form-group full-width">
+            <label>Opções</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" id="productStatus" checked>
+                <span>Ativo</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="productVisible">
+                <span>Exibir na Vitrine</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="productFeatured">
+                <span>Produto em Destaque</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save"></i> Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth & Database -->
+  <script src="adm-auth.js"></script>
+  <script src="database.js"></script>
+
+  <script>
+    // Protect page
+    window.auth.requireAuth();
+
+    // Initialize
+    let allProducts = [];
+
+    // Load products
+    function loadProducts() {
+      allProducts = window.db.catalog;
+      renderProducts(allProducts);
+      updateStats();
+    }
+
+    // Update stats
+    function updateStats() {
+      document.getElementById('totalProducts').textContent = allProducts.length;
+      document.getElementById('activeProducts').textContent = allProducts.filter(p => p.status === 'ativo').length;
+      document.getElementById('visibleProducts').textContent = allProducts.filter(p => p.visible === true).length;
+    }
+
+    // Render products
+    function renderProducts(products) {
+      const tbody = document.getElementById('productsList');
+      const emptyState = document.getElementById('emptyState');
+      const table = document.getElementById('productsTable');
+
+      if (products.length === 0) {
+        table.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      table.style.display = 'table';
+      emptyState.style.display = 'none';
+
+      tbody.innerHTML = products.map(product => `
+        <tr>
+          <td>
+            <div class="product-info">
+              <img src="${product.image || '../assets/images/logodlk.webp'}" alt="${product.name}" class="product-thumb" onerror="this.src='../assets/images/logodlk.webp'">
+              <div>
+                <div class="product-name">${product.name}</div>
+                <div class="product-category">${product.description || 'Sem descrição'}</div>
+              </div>
+            </div>
+          </td>
+          <td>${product.category || '-'}</td>
+          <td class="price">R$ ${(product.price || 0).toFixed(2).replace('.', ',')}</td>
+          <td>
+            <span class="badge ${product.status === 'ativo' ? 'badge-active' : 'badge-inactive'}">
+              ${product.status === 'ativo' ? 'Ativo' : 'Inativo'}
+            </span>
+          </td>
+          <td>
+            <span class="visibility-badge ${product.visible ? 'visibility-visible' : 'visibility-hidden'}">
+              ${product.visible ? 'Sim' : 'Não'}
+            </span>
+            ${product.featured ? '<span class="badge badge-featured" style="margin-left:5px;">★</span>' : ''}
+          </td>
+          <td>
+            <div class="actions">
+              <button class="btn-icon btn-edit" onclick="editProduct('${product.id}')" title="Editar">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn-icon btn-delete" onclick="deleteProduct('${product.id}')" title="Excluir">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Filter products
+    function filterProducts() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const status = document.getElementById('statusFilter').value;
+      const visibility = document.getElementById('visibilityFilter').value;
+
+      let filtered = allProducts.filter(product => {
+        const matchSearch = product.name.toLowerCase().includes(search) ||
+                          (product.description || '').toLowerCase().includes(search);
+        const matchStatus = status === 'all' || product.status === status;
+        const matchVisibility = visibility === 'all' ||
+                               (visibility === 'visible' && product.visible) ||
+                               (visibility === 'hidden' && !product.visible);
+
+        return matchSearch && matchStatus && matchVisibility;
+      });
+
+      renderProducts(filtered);
+    }
+
+    // Open modal
+    function openModal(productId = null) {
+      const modal = document.getElementById('productModal');
+      const form = document.getElementById('productForm');
+      const title = document.getElementById('modalTitle');
+
+      form.reset();
+
+      if (productId) {
+        const product = allProducts.find(p => p.id === productId);
+        if (product) {
+          title.textContent = 'Editar Produto';
+          document.getElementById('productId').value = product.id;
+          document.getElementById('productName').value = product.name || '';
+          document.getElementById('productDescription').value = product.description || '';
+          document.getElementById('productPrice').value = product.price || '';
+          document.getElementById('productCategory').value = product.category || 'bolos';
+          document.getElementById('productImage').value = product.image || '';
+          document.getElementById('productStatus').checked = product.status === 'ativo';
+          document.getElementById('productVisible').checked = product.visible === true;
+          document.getElementById('productFeatured').checked = product.featured === true;
+        }
+      } else {
+        title.textContent = 'Novo Produto';
+        document.getElementById('productId').value = '';
+        document.getElementById('productStatus').checked = true;
+      }
+
+      modal.classList.add('active');
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
+
+    // Edit product
+    function editProduct(id) {
+      openModal(id);
+    }
+
+    // Save product
+    function saveProduct(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('productId').value;
+      const productData = {
+        name: document.getElementById('productName').value,
+        description: document.getElementById('productDescription').value,
+        price: parseFloat(document.getElementById('productPrice').value) || 0,
+        category: document.getElementById('productCategory').value,
+        image: document.getElementById('productImage').value || '../assets/images/logodlk.webp',
+        status: document.getElementById('productStatus').checked ? 'ativo' : 'inativo',
+        visible: document.getElementById('productVisible').checked,
+        featured: document.getElementById('productFeatured').checked
+      };
+
+      if (id) {
+        window.db.updateProduct(id, productData);
+      } else {
+        window.db.addProduct(productData);
+      }
+
+      closeModal();
+      loadProducts();
+    }
+
+    // Delete product
+    function deleteProduct(id) {
+      if (confirm('Tem certeza que deseja excluir este produto?')) {
+        window.db.deleteProduct(id);
+        loadProducts();
+      }
+    }
+
+    // Close modal on outside click
+    document.getElementById('productModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Show user
+    const user = window.auth.getCurrentUser();
+    if (user) {
+      document.getElementById('userName').textContent = user.username.charAt(0).toUpperCase() + user.username.slice(1);
+    }
+
+    // Seed test data if empty
+    window.db.seedTestData();
+
+    // Initialize
+    loadProducts();
+
+    // Session monitor
+    window.auth.startSessionMonitor();
+  </script>
+</body>
+</html>
