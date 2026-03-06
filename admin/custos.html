@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custos - Deliká ADM</title>
+    <link rel="stylesheet" href="../css/delika.css">
+    <style>
+        :root {
+            --roxo-dark: #2D0A3E;
+            --roxo-medium: #440069;
+            --roxo-light: #6B2D8C;
+            --roxo-lighter: #9F57C6;
+            --rosa: #FF69B4;
+            --gold: #FFD700;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --light: #F5F5F5;
+            --dark: #2D0A3E;
+        }
+
+        .custos-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .custos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .custos-header h1 {
+            color: var(--roxo-medium);
+            font-size: 2rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            padding: 10px 20px;
+            background: var(--roxo-light);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-buttons button:hover {
+            background: var(--roxo-medium);
+            transform: translateY(-2px);
+        }
+
+        /* Estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--roxo-light);
+        }
+
+        .stat-card.positive {
+            border-left-color: var(--success);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--warning);
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--danger);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
+        }
+
+        .stat-card .value {
+            color: var(--roxo-medium);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .stat-card .sub {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            border-color: var(--roxo-light);
+            outline: none;
+        }
+
+        /* Tabela de Custos */
+        .custos-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: var(--roxo-light);
+            color: white;
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
+            gap: 15px;
+            font-weight: bold;
+        }
+
+        .table-body {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .table-row {
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
+            gap: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .table-row:hover {
+            background: #f9f9f9;
+        }
+
+        .table-row .category {
+            font-weight: bold;
+            color: var(--roxo-light);
+        }
+
+        .table-row .cost {
+            color: #666;
+        }
+
+        .table-row .margin {
+            font-weight: bold;
+        }
+
+        .table-row .price {
+            color: var(--roxo-medium);
+            font-weight: bold;
+        }
+
+        .table-row .profit {
+            font-weight: bold;
+        }
+
+        .table-row .profit.positive {
+            color: var(--success);
+        }
+
+        .table-row .profit.negative {
+            color: var(--danger);
+        }
+
+        .table-row .profit-percent {
+            font-weight: bold;
+        }
+
+        .table-row .profit-percent.good {
+            color: var(--success);
+        }
+
+        .table-row .profit-percent.bad {
+            color: var(--danger);
+        }
+
+        .table-row .actions {
+            display: flex;
+            gap: 5px;
+            justify-content: flex-end;
+        }
+
+        .table-row .actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .table-row .actions .btn-edit {
+            background: var(--roxo-light);
+            color: white;
+        }
+
+        .table-row .actions .btn-edit:hover {
+            background: var(--roxo-medium);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-header h2 {
+            color: var(--roxo-medium);
+            margin: 0;
+        }
+
+        .modal-header .close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-header .close:hover {
+            color: var(--danger);
+        }
+
+        .modal-body .form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-body .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--roxo-medium);
+            font-weight: bold;
+        }
+
+        .modal-body .form-group input,
+        .modal-body .form-group select,
+        .modal-body .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .modal-body .form-group input:focus,
+        .modal-body .form-group select:focus,
+        .modal-body .form-group textarea:focus {
+            border-color: var(--roxo-light);
+            outline: none;
+        }
+
+        .modal-body .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+
+        .modal-footer button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-footer .btn-cancel {
+            background: #ccc;
+            color: white;
+        }
+
+        .modal-footer .btn-cancel:hover {
+            background: #bbb;
+        }
+
+        .modal-footer .btn-save {
+            background: var(--success);
+            color: white;
+        }
+
+        .modal-footer .btn-save:hover {
+            background: #3d8b40;
+        }
+
+        /* Detalhes de Insumos */
+        .ingredients-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .ingredients-section h4 {
+            color: var(--roxo-medium);
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+
+        .ingredients-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ingredients-table th {
+            background: var(--roxo-light);
+            color: white;
+            padding: 8px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .ingredients-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.85rem;
+        }
+
+        .ingredients-table .ingredient-cost {
+            text-align: right;
+            font-weight: bold;
+            color: var(--roxo-medium);
+        }
+
+        .cost-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--roxo-light);
+        }
+
+        .cost-summary-item {
+            text-align: center;
+        }
+
+        .cost-summary-item label {
+            display: block;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .cost-summary-item .value {
+            color: var(--roxo-medium);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Resumo de Custo */
+        .cost-resume {
+            background: linear-gradient(135deg, var(--roxo-light) 0%, var(--roxo-medium) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cost-resume h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        .cost-resume-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .cost-resume-item {
+            text-align: center;
+        }
+
+        .cost-resume-item .label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .cost-resume-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 1200px) {
+            .table-header {
+                grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+            }
+
+            .table-header .actions {
+                display: none;
+            }
+
+            .table-row {
+                grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+            }
+
+            .table-row .actions {
+                display: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .table-header {
+                grid-template-columns: 0.5fr 2fr 1fr 1fr;
+            }
+
+            .table-header .profit,
+            .table-header .profit-percent,
+            .table-header .actions {
+                display: none;
+            }
+
+            .table-row {
+                grid-template-columns: 0.5fr 2fr 1fr 1fr;
+            }
+
+            .table-row .profit,
+            .table-row .profit-percent,
+            .table-row .actions {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .custos-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filters input,
+            .filters select {
+                width: 100%;
+            }
+
+            .table-header {
+                grid-template-columns: 1fr;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .table-row {
+                grid-template-columns: 1fr;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .table-row .category {
+                width: 100%;
+            }
+
+            .table-row .name {
+                width: 100%;
+            }
+
+            .table-row .cost,
+            .table-row .margin,
+            .table-row .price,
+            .table-row .profit,
+            .table-row .profit-percent {
+                width: calc(50% - 5px);
+            }
+        }
+
+        /* Botão Adicionar */
+        .btn-add {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-add:hover {
+            background: #3d8b40;
+        }
+
+        /* Vazio */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="custos-container">
+        <header class="custos-header">
+            <h1>
+                <span>💰</span>
+                Gestão de Custos
+            </h1>
+            <div class="nav-buttons">
+                <button onclick="location.href='produtos.html'">📦 Produtos</button>
+                <button onclick="location.href='pedidos.html'">📋 Pedidos</button>
+                <button onclick="location.href='custos.html'">💰 Custos</button>
+                <button onclick="location.href='estoque.html'">📦 Estoque</button>
+                <button onclick="location.href='clientes.html'">👥 Clientes</button>
+                <button onclick="location.href='config.html'">⚙️ Config</button>
+                <button onclick="location.href='painel.html'">📊 Painel</button>
+            </div>
+        </header>
+
+        <!-- Estatísticas -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Custo Médio</h3>
+                <p class="value" id="avgCost">R$ 0,00</p>
+                <p class="sub">por receita</p>
+            </div>
+            <div class="stat-card">
+                <h3>Preço Médio</h3>
+                <p class="value" id="avgPrice">R$ 0,00</p>
+                <p class="sub">de venda</p>
+            </div>
+            <div class="stat-card positive">
+                <h3>Lucro Médio</h3>
+                <p class="value" id="avgProfit">R$ 0,00</p>
+                <p class="sub">por receita</p>
+            </div>
+            <div class="stat-card warning" id="marginStat">
+                <h3>Margem Média</h3>
+                <p class="value" id="avgMargin">0%</p>
+                <p class="sub">de lucro</p>
+            </div>
+        </section>
+
+        <!-- Resumo -->
+        <section class="cost-resume">
+            <h3>📊 Resumo de Custos por Categoria</h3>
+            <div class="cost-resume-grid" id="categorySummary">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+
+        <!-- Filtros -->
+        <section class="filters">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar receita..." oninput="filterTable()">
+            <select id="categoryFilter" onchange="filterTable()">
+                <option value="">Todas as Categorias</option>
+                <option value="Bolos">Bolos</option>
+                <option value="Tortas">Tortas</option>
+                <option value="Doces">Doces</option>
+                <option value="Sobremesas">Sobremesas</option>
+                <option value="Outros">Outros</option>
+            </select>
+            <select id="marginFilter" onchange="filterTable()">
+                <option value="">Todas as Margens</option>
+                <option value="good">Margens Boas (> 50%)</option>
+                <option value="low">Margens Baixas (< 30%)</option>
+                <option value="bad">Margens Ruins (< 20%)</option>
+            </select>
+        </section>
+
+        <!-- Tabela -->
+        <section class="custos-table">
+            <div class="table-header">
+                <span>Categoria</span>
+                <span>Receita</span>
+                <span>Custo</span>
+                <span>Margem</span>
+                <span>Preço Venda</span>
+                <span>Lucro</span>
+                <span>% Lucro</span>
+                <span>Ações</span>
+            </div>
+            <div class="table-body" id="tableBody">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal de Detalhes -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalhes do Custo</h2>
+                <button class="close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../admin/database.js"></script>
+    <script>
+        // Estado
+        let recipes = [];
+        let catalog = [];
+        let inventory = [];
+
+        // Carregar dados
+        function loadData() {
+            recipes = DB.getRecipes() || [];
+            catalog = DB.getCatalog() || [];
+            inventory = DB.getInventory() || [];
+        }
+
+        // Calcular custo de receita
+        function calculateRecipeCost(recipe) {
+            let ingredientsCost = 0;
+            const ingredientDetails = [];
+
+            if (recipe.ingredients && recipe.ingredients.length > 0) {
+                recipe.ingredients.forEach(ing => {
+                    const inventoryItem = inventory.find(i => i.id === ing.inventoryId);
+                    if (inventoryItem) {
+                        const costPerUnit = inventoryItem.costPerUnit || inventoryItem.cost / (inventoryItem.quantity || 1);
+                        const ingredientCost = costPerUnit * ing.quantity;
+                        ingredientsCost += ingredientCost;
+
+                        ingredientDetails.push({
+                            name: inventoryItem.name,
+                            quantity: ing.quantity,
+                            unit: inventoryItem.unit || 'un',
+                            costPerUnit: costPerUnit,
+                            totalCost: ingredientCost
+                        });
+                    }
+                });
+            }
+
+            const laborCost = recipe.laborCost || 0;
+            const totalCost = ingredientsCost + laborCost;
+            const suggestedPrice = totalCost * (1 + (recipe.margin || 0.5));
+
+            return {
+                ingredientsCost,
+                laborCost,
+                totalCost,
+                suggestedPrice,
+                ingredientDetails
+            };
+        }
+
+        // Calcular margem real
+        function calculateRealMargin(recipe, catalogItem) {
+            const costInfo = calculateRecipeCost(recipe);
+            const currentPrice = catalogItem ? catalogItem.price : costInfo.suggestedPrice;
+            const profit = currentPrice - costInfo.totalCost;
+            const profitPercent = costInfo.totalCost > 0 ? (profit / currentPrice) * 100 : 0;
+
+            return {
+                currentPrice,
+                profit,
+                profitPercent
+            };
+        }
+
+        // Atualizar estatísticas
+        function updateStats() {
+            const recipeCosts = recipes.map(r => calculateRecipeCost(r));
+            const validCosts = recipeCosts.filter(c => c.totalCost > 0);
+
+            if (validCosts.length === 0) {
+                document.getElementById('avgCost').textContent = 'R$ 0,00';
+                document.getElementById('avgPrice').textContent = 'R$ 0,00';
+                document.getElementById('avgProfit').textContent = 'R$ 0,00';
+                document.getElementById('avgMargin').textContent = '0%';
+                return;
+            }
+
+            const avgCost = validCosts.reduce((acc, c) => acc + c.totalCost, 0) / validCosts.length;
+            const avgPrice = validCosts.reduce((acc, c) => acc + c.suggestedPrice, 0) / validCosts.length;
+            const avgProfit = avgPrice - avgCost;
+
+            // Calcular margens reais
+            let totalProfitPercent = 0;
+            let count = 0;
+
+            recipes.forEach(recipe => {
+                const catalogItem = catalog.find(c => c.recipeId === recipe.id);
+                const marginInfo = calculateRealMargin(recipe, catalogItem);
+                totalProfitPercent += marginInfo.profitPercent;
+                count++;
+            });
+
+            const avgMargin = count > 0 ? totalProfitPercent / count : 0;
+
+            document.getElementById('avgCost').textContent = formatCurrency(avgCost);
+            document.getElementById('avgPrice').textContent = formatCurrency(avgPrice);
+            document.getElementById('avgProfit').textContent = formatCurrency(avgProfit);
+            document.getElementById('avgMargin').textContent = avgMargin.toFixed(1) + '%';
+
+            // Atualizar estilo da margem
+            const marginStat = document.getElementById('marginStat');
+            marginStat.classList.remove('positive', 'warning', 'danger');
+            if (avgMargin >= 50) {
+                marginStat.classList.add('positive');
+            } else if (avgMargin >= 30) {
+                marginStat.classList.add('warning');
+            } else {
+                marginStat.classList.add('danger');
+            }
+        }
+
+        // Atualizar resumo por categoria
+        function updateCategorySummary() {
+            const categories = ['Bolos', 'Tortas', 'Doces', 'Sobremesas', 'Outros'];
+            const summary = {};
+
+            categories.forEach(cat => {
+                summary[cat] = {
+                    count: 0,
+                    totalCost: 0,
+                    avgCost: 0,
+                    avgMargin: 0
+                };
+            });
+
+            recipes.forEach(recipe => {
+                const costInfo = calculateRecipeCost(recipe);
+                const catalogItem = catalog.find(c => c.recipeId === recipe.id);
+                const marginInfo = calculateRealMargin(recipe, catalogItem);
+
+                const cat = recipe.category || 'Outros';
+                if (summary[cat]) {
+                    summary[cat].count++;
+                    summary[cat].totalCost += costInfo.totalCost;
+                }
+            });
+
+            const summaryContainer = document.getElementById('categorySummary');
+            summaryContainer.innerHTML = '';
+
+            categories.forEach(cat => {
+                if (summary[cat].count > 0) {
+                    summary[cat].avgCost = summary[cat].totalCost / summary[cat].count;
+
+                    // Calcular margem média da categoria
+                    let totalMargin = 0;
+                    let count = 0;
+
+                    recipes.forEach(recipe => {
+                        if (recipe.category === cat) {
+                            const catalogItem = catalog.find(c => c.recipeId === recipe.id);
+                            const marginInfo = calculateRealMargin(recipe, catalogItem);
+                            totalMargin += marginInfo.profitPercent;
+                            count++;
+                        }
+                    });
+
+                    summary[cat].avgMargin = count > 0 ? totalMargin / count : 0;
+
+                    const item = document.createElement('div');
+                    item.className = 'cost-resume-item';
+                    item.innerHTML = `
+                        <div class="label">${cat} (${summary[cat].count})</div>
+                        <div class="value">${formatCurrency(summary[cat].avgCost)}</div>
+                        <div class="label">Margem: ${summary[cat].avgMargin.toFixed(1)}%</div>
+                    `;
+                    summaryContainer.appendChild(item);
+                }
+            });
+        }
+
+        // Renderizar tabela
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const marginFilter = document.getElementById('marginFilter').value;
+
+            const filteredRecipes = recipes.filter(recipe => {
+                const costInfo = calculateRecipeCost(recipe);
+                const catalogItem = catalog.find(c => c.recipeId === recipe.id);
+                const marginInfo = calculateRealMargin(recipe, catalogItem);
+
+                const matchesSearch = recipe.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || recipe.category === categoryFilter;
+
+                let matchesMargin = true;
+                if (marginFilter === 'good') matchesMargin = marginInfo.profitPercent >= 50;
+                else if (marginFilter === 'low') matchesMargin = marginInfo.profitPercent < 50 && marginInfo.profitPercent >= 30;
+                else if (marginFilter === 'bad') matchesMargin = marginInfo.profitPercent < 30;
+
+                return matchesSearch && matchesCategory && matchesMargin;
+            });
+
+            if (filteredRecipes.length === 0) {
+                tableBody.innerHTML = `
+                    <div class="empty-state">
+                        <i>💰</i>
+                        <h3>Nenhuma receita encontrada</h3>
+                        <p>Adicione receitas no módulo de Produtos para começar</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredRecipes.forEach(recipe => {
+                const costInfo = calculateRecipeCost(recipe);
+                const catalogItem = catalog.find(c => c.recipeId === recipe.id);
+                const marginInfo = calculateRealMargin(recipe, catalogItem);
+
+                const row = document.createElement('div');
+                row.className = 'table-row';
+
+                const profitClass = marginInfo.profit >= 0 ? 'positive' : 'negative';
+                const marginClass = marginInfo.profitPercent >= 50 ? 'good' : (marginInfo.profitPercent < 30 ? 'bad' : '');
+
+                row.innerHTML = `
+                    <span class="category">${recipe.category || '-'}</span>
+                    <span class="name">${recipe.name}</span>
+                    <span class="cost">${formatCurrency(costInfo.totalCost)}</span>
+                    <span class="margin">${(recipe.margin * 100).toFixed(0)}%</span>
+                    <span class="price">${formatCurrency(marginInfo.currentPrice)}</span>
+                    <span class="profit ${profitClass}">${formatCurrency(marginInfo.profit)}</span>
+                    <span class="profit-percent ${marginClass}">${marginInfo.profitPercent.toFixed(1)}%</span>
+                    <span class="actions">
+                        <button class="btn-edit" onclick="showDetails('${recipe.id}')">👁️ Ver</button>
+                    </span>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Mostrar detalhes
+        function showDetails(recipeId) {
+            const recipe = recipes.find(r => r.id === recipeId);
+            if (!recipe) return;
+
+            const costInfo = calculateRecipeCost(recipe);
+            const catalogItem = catalog.find(c => c.recipeId === recipe.id);
+            const marginInfo = calculateRealMargin(recipe, catalogItem);
+
+            const modalBody = document.getElementById('modalBody');
+            document.getElementById('modalTitle').textContent = `Detalhes: ${recipe.name}`;
+
+            let ingredientsHtml = '';
+            if (costInfo.ingredientDetails.length > 0) {
+                ingredientsHtml = `
+                    <div class="ingredients-section">
+                        <h4>📦 Insumos Utilizados</h4>
+                        <table class="ingredients-table">
+                            <thead>
+                                <tr>
+                                    <th>Insumo</th>
+                                    <th>Quantidade</th>
+                                    <th>Custo Unitário</th>
+                                    <th>Custo Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${costInfo.ingredientDetails.map(ing => `
+                                    <tr>
+                                        <td>${ing.name}</td>
+                                        <td>${ing.quantity.toFixed(2)} ${ing.unit}</td>
+                                        <td>${formatCurrency(ing.costPerUnit)}/${ing.unit}</td>
+                                        <td class="ingredient-cost">${formatCurrency(ing.totalCost)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            modalBody.innerHTML = `
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea readonly>${recipe.description || 'Sem descrição'}</textarea>
+                </div>
+
+                ${ingredientsHtml}
+
+                <div class="cost-summary">
+                    <div class="cost-summary-item">
+                        <label>Custo Insumos</label>
+                        <div class="value">${formatCurrency(costInfo.ingredientsCost)}</div>
+                    </div>
+                    <div class="cost-summary-item">
+                        <label>Mão de Obra</label>
+                        <div class="value">${formatCurrency(costInfo.laborCost)}</div>
+                    </div>
+                    <div class="cost-summary-item">
+                        <label>Custo Total</label>
+                        <div class="value">${formatCurrency(costInfo.totalCost)}</div>
+                    </div>
+                    <div class="cost-summary-item">
+                        <label>Preço Atual</label>
+                        <div class="value">${formatCurrency(marginInfo.currentPrice)}</div>
+                    </div>
+                    <div class="cost-summary-item">
+                        <label>Lucro</label>
+                        <div class="value ${marginInfo.profit >= 0 ? 'positive' : 'negative'}">${formatCurrency(marginInfo.profit)}</div>
+                    </div>
+                    <div class="cost-summary-item">
+                        <label>% Lucro</label>
+                        <div class="value">${marginInfo.profitPercent.toFixed(1)}%</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modal').classList.add('active');
+        }
+
+        // Fechar modal
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Filtrar tabela
+        function filterTable() {
+            renderTable();
+        }
+
+        // Formatar moeda
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Inicializar
+        function init() {
+            loadData();
+            updateStats();
+            updateCategorySummary();
+            renderTable();
+        }
+
+        // Iniciar
+        init();
+    </script>
+</body>
+</html>
