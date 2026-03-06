@@ -1,740 +1,706 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configurações - Deliká ADM</title>
-    <link rel="stylesheet" href="../css/delika.css">
-    <style>
-        :root {
-            --roxo-dark: #2D0A3E;
-            --roxo-medium: #440069;
-            --roxo-light: #6B2D8C;
-            --roxo-lighter: #9F57C6;
-            --rosa: #FF69B4;
-            --gold: #FFD700;
-            --success: #4CAF50;
-            --warning: #FF9800;
-            --danger: #F44336;
-            --light: #F5F5F5;
-            --dark: #2D0A3E;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações | Admin Deliká</title>
+  <link rel="icon" href="../assets/images/logodlk.webp" type="image/webp">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
-        .config-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+  <style>
+    :root {
+      --roxo-delika: #6B2D8C;
+      --roxo-escuro: #311440;
+      --dourado: #D4AF37;
+      --lilas-claro: #F3E5F5;
+      --bg-site: #FAF7FC;
+      --text-dark: #2C2C2C;
+      --success: #25D366;
+      --warning: #FFA500;
+      --danger: #FF4757;
+    }
 
-        .config-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .config-header h1 {
-            color: var(--roxo-medium);
-            font-size: 2rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background: var(--bg-site);
+      color: var(--text-dark);
+      display: flex;
+      min-height: 100vh;
+    }
 
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, var(--roxo-escuro) 0%, var(--roxo-delika) 100%);
+      color: white;
+      padding: 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
 
-        .nav-buttons button {
-            padding: 10px 20px;
-            background: var(--roxo-light);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
+    .sidebar-logo {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
 
-        .nav-buttons button:hover {
-            background: var(--roxo-medium);
-            transform: translateY(-2px);
-        }
+    .sidebar-logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--dourado);
+    }
 
-        /* Seções */
-        .config-section {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 25px;
-            margin-bottom: 20px;
-        }
+    .sidebar-logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
 
-        .config-section h2 {
-            color: var(--roxo-medium);
-            font-size: 1.3rem;
-            margin: 0 0 20px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .sidebar-menu { list-style: none; }
+    .sidebar-menu li { margin-bottom: 5px; }
 
-        /* Formulário */
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .sidebar-menu a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--roxo-medium);
-            font-weight: bold;
-        }
+    .sidebar-menu a:hover, .sidebar-menu a.active {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.95rem;
-            transition: border-color 0.3s ease;
-        }
+    .sidebar-menu a.active {
+      background: var(--dourado);
+      color: var(--roxo-escuro);
+    }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--roxo-light);
-            outline: none;
-        }
+    .sidebar-menu i { width: 20px; text-align: center; }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+    .user-info {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
 
-        .form-group .hint {
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: 5px;
-        }
+    .user-info .name { font-weight: 700; }
+    .user-info .logout { color: var(--danger); font-size: 0.85rem; cursor: pointer; margin-top: 5px; }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 30px;
+      max-width: 1000px;
+    }
 
-        /* Botões de ação */
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .header {
+      margin-bottom: 30px;
+    }
 
-        .btn-primary {
-            background: var(--roxo-light);
-            color: white;
-        }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--roxo-escuro);
+    }
 
-        .btn-primary:hover {
-            background: var(--roxo-medium);
-        }
+    /* Sections */
+    .config-section {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      padding: 25px;
+      margin-bottom: 20px;
+    }
 
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
+    .config-section h2 {
+      color: var(--roxo-escuro);
+      font-size: 1.3rem;
+      margin: 0 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .btn-success:hover {
-            background: #3d8b40;
-        }
+    /* Form */
+    .form-group { margin-bottom: 20px; }
 
-        .btn-warning {
-            background: var(--warning);
-            color: white;
-        }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--roxo-escuro);
+      font-weight: 600;
+    }
 
-        .btn-warning:hover {
-            background: #e68900;
-        }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: 'Urbanist', sans-serif;
+      transition: border-color 0.3s ease;
+    }
 
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--roxo-delika);
+      outline: none;
+    }
 
-        .btn-danger:hover {
-            background: #d32f2f;
-        }
+    .form-group .hint {
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 5px;
+    }
 
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
 
-        /* Info do sistema */
-        .system-info {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
+    /* Buttons */
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .system-info h3 {
-            color: var(--roxo-medium);
-            font-size: 1rem;
-            margin: 0 0 15px 0;
-        }
+    .btn-primary { background: var(--roxo-delika); color: white; }
+    .btn-primary:hover { background: var(--roxo-escuro); }
 
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #1db954; }
 
-        .info-item {
-            background: white;
-            padding: 12px;
-            border-radius: 5px;
-            border-left: 3px solid var(--roxo-light);
-        }
+    .btn-warning { background: var(--warning); color: white; }
+    .btn-warning:hover { background: #e68900; }
 
-        .info-item label {
-            display: block;
-            color: #666;
-            font-size: 0.8rem;
-            margin-bottom: 5px;
-        }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { background: #e04030; }
 
-        .info-item .value {
-            color: var(--roxo-medium);
-            font-weight: bold;
-        }
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
 
-        /* Armazenamento */
-        .storage-bar {
-            height: 20px;
-            background: #eee;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
+    /* System Info */
+    .system-info {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
 
-        .storage-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success) 0%, var(--warning) 50%, var(--danger) 100%);
-            transition: width 0.5s ease;
-        }
+    .system-info h3 {
+      color: var(--roxo-escuro);
+      font-size: 1rem;
+      margin: 0 0 15px 0;
+    }
 
-        .storage-info {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.85rem;
-            color: #666;
-        }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-        /* Alertas */
-        .alert {
-            padding: 15px 20px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .info-item {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 3px solid var(--roxo-delika);
+    }
 
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
+    .info-item label {
+      display: block;
+      color: #666;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
 
-        .alert-warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
+    .info-item .value {
+      color: var(--roxo-escuro);
+      font-weight: 700;
+    }
 
-        .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
+    /* Storage Bar */
+    .storage-bar {
+      height: 20px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
 
-        /* Checkbox toggle */
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .storage-bar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success) 0%, var(--warning) 50%, var(--danger) 100%);
+      transition: width 0.5s ease;
+    }
 
-        .toggle {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 26px;
-        }
+    .storage-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #666;
+    }
 
-        .toggle input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+    /* Alert */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 26px;
-        }
+    .alert-success { background: #d4edda; color: #155724; }
+    .alert-warning { background: #fff3cd; color: #856404; }
+    .alert-danger { background: #f8d7da; color: #721c24; }
 
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
+    /* Toggle */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .toggle input:checked + .toggle-slider {
-            background-color: var(--roxo-light);
-        }
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
 
-        .toggle input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-        }
+    .toggle input { opacity: 0; width: 0; height: 0; }
 
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .config-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 26px;
+    }
 
-            .nav-buttons {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+    .toggle input:checked + .toggle-slider { background-color: var(--roxo-delika); }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(24px); }
 
-            .btn-group {
-                flex-direction: column;
-            }
+    /* Responsive */
+    @media (max-width: 770px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
 
-            .btn-group .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+      .sidebar.open { transform: translateX(0); }
+
+      .main-content { margin-left: 0; padding: 20px; }
+
+      .header { text-align: center; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .btn-group { flex-direction: column; }
+      .btn-group .btn { width: 100%; justify-content: center; }
+    }
+
+    .mobile-toggle { display: none; }
+
+    @media (max-width: 770px) {
+      .mobile-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 101;
+        background: var(--roxo-delika);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="config-container">
-        <header class="config-header">
-            <h1>
-                <span>⚙️</span>
-                Configurações do Sistema
-            </h1>
-            <div class="nav-buttons">
-                <button onclick="location.href='produtos.html'">📦 Produtos</button>
-                <button onclick="location.href='pedidos.html'">📋 Pedidos</button>
-                <button onclick="location.href='custos.html'">💰 Custos</button>
-                <button onclick="location.href='estoque.html'">📦 Estoque</button>
-                <button onclick="location.href='clientes.html'">👥 Clientes</button>
-                <button onclick="location.href='config.html'">⚙️ Config</button>
-                <button onclick="location.href='painel.html'">📊 Painel</button>
-            </div>
-        </header>
+  <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
 
-        <!-- Alerta de feedback -->
-        <div id="alertContainer"></div>
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="../assets/images/logodlk.webp" alt="Deliká Logo">
+      <h2>Deliká ADM</h2>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="painel.html"><i class="fas fa-chart-line"></i> Painel</a></li>
+      <li><a href="produtos.html"><i class="fas fa-box"></i> Produtos</a></li>
+      <li><a href="pedidos.html"><i class="fas fa-clipboard-list"></i> Pedidos</a></li>
+      <li><a href="custos.html"><i class="fas fa-calculator"></i> Custos</a></li>
+      <li><a href="estoque.html"><i class="fas fa-warehouse"></i> Estoque</a></li>
+      <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
+      <li><a href="config.html" class="active"><i class="fas fa-cog"></i> Configurações</a></li>
+    </ul>
+    <div class="user-info">
+      <div class="name">Administrador</div>
+      <div class="logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</div>
+    </div>
+  </nav>
 
-        <!-- Dados da Empresa -->
-        <section class="config-section">
-            <h2>🏪 Dados da Empresa</h2>
-            <form id="companyForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nome da Empresa</label>
-                        <input type="text" id="companyName" placeholder="Deliká Bolos e Doces">
-                    </div>
-                    <div class="form-group">
-                        <label>Telefone Principal</label>
-                        <input type="tel" id="companyPhone" placeholder="(11) 99999-9999">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>WhatsApp</label>
-                        <input type="tel" id="companyWhatsapp" placeholder="5511999999999">
-                        <p class="hint">Formato: 5511999999999 (sem espaços)</p>
-                    </div>
-                    <div class="form-group">
-                        <label>Endereço</label>
-                        <input type="text" id="companyAddress" placeholder="Rua das Flores, 123 - Centro">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Descrição / Tagline</label>
-                    <input type="text" id="companyTagline" placeholder="Bolos e doces artesanais">
-                </div>
-                <button type="button" class="btn btn-primary" onclick="saveCompanyData()">
-                    💾 Salvar Dados
-                </button>
-            </form>
-        </section>
-
-        <!-- Preferências do Sistema -->
-        <section class="config-section">
-            <h2>🎯 Preferências</h2>
-            <div class="form-group">
-                <div class="toggle-container">
-                    <label class="toggle">
-                        <input type="checkbox" id="autoStockReduction">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span>Baixa automática de estoque ao concluir pedidos</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="toggle-container">
-                    <label class="toggle">
-                        <input type="checkbox" id="notifyLowStock">
-                        <span class="toggle-slider"></span>
-                    </label>
-                    <span>Notificar estoque baixo</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Margem de Lucro Padrão (%)</label>
-                <input type="number" id="defaultMargin" value="50" min="0" max="100">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="savePreferences()">
-                💾 Salvar Preferências
-            </button>
-        </section>
-
-        <!-- Backup e Restore -->
-        <section class="config-section">
-            <h2>💾 Backup e Restauração</h2>
-            <p style="color: #666; margin-bottom: 15px;">
-                Faça backup regularmente para não perder seus dados. O backup contém todos os produtos, clientes, pedidos e configurações.
-            </p>
-            <div class="btn-group">
-                <button class="btn btn-success" onclick="createBackup()">
-                    📥 Baixar Backup
-                </button>
-                <button class="btn btn-warning" onclick="document.getElementById('restoreFile').click()">
-                    📤 Restaurar Backup
-                </button>
-                <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="restoreBackup(this)">
-            </div>
-        </section>
-
-        <!-- Dados do Sistema -->
-        <section class="config-section">
-            <h2>📊 Dados do Sistema</h2>
-            <div class="system-info">
-                <h3>Informações Atuais</h3>
-                <div class="info-grid" id="systemInfo">
-                    <!-- Preenchido via JS -->
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 20px;">
-                <label>Uso do Armazenamento (LocalStorage)</label>
-                <div class="storage-bar">
-                    <div class="fill" id="storageFill" style="width: 0%"></div>
-                </div>
-                <div class="storage-info">
-                    <span id="storageUsed">0 KB usado</span>
-                    <span>Limite: 5 MB por domínio</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Zona de Perigo -->
-        <section class="config-section" style="border: 2px solid var(--danger);">
-            <h2 style="color: var(--danger);">⚠️ Zona de Perigo</h2>
-            <p style="color: #666; margin-bottom: 15px;">
-                Estas ações são irreversíveis. Tenha certeza antes de prosseguir.
-            </p>
-            <div class=" <button class="btn btn-warning"btn-group">
-                onclick="clearOrders()">
-                    🗑️ Limpar Pedidos
-                </button>
-                <button class="btn btn-warning" onclick="clearClients()">
-                    🗑️ Limpar Clientes
-                </button>
-                <button class="btn btn-danger" onclick="clearAllData()">
-                    💥 Apagar Todos os Dados
-                </button>
-            </div>
-        </section>
+  <main class="main-content">
+    <div class="header">
+      <h1><i class="fas fa-cog" style="color: var(--roxo-delika); margin-right: 15px;"></i>Configurações do Sistema</h1>
     </div>
 
-    <script src="../admin/database.js"></script>
-    <script>
-        // Carregar configurações salvas
-        function loadSettings() {
-            // Dados da empresa
-            const companyData = JSON.parse(localStorage.getItem('delika_company_data') || '{}');
-            document.getElementById('companyName').value = companyData.name || '';
-            document.getElementById('companyPhone').value = companyData.phone || '';
-            document.getElementById('companyWhatsapp').value = companyData.whatsapp || '';
-            document.getElementById('companyAddress').value = companyData.address || '';
-            document.getElementById('companyTagline').value = companyData.tagline || '';
+    <div id="alertContainer"></div>
 
-            // Preferências
-            const preferences = JSON.parse(localStorage.getItem('delika_preferences') || '{}');
-            document.getElementById('autoStockReduction').checked = preferences.autoStockReduction !== false;
-            document.getElementById('notifyLowStock').checked = preferences.notifyLowStock !== false;
-            document.getElementById('defaultMargin').value = preferences.defaultMargin || 50;
+    <!-- Dados da Empresa -->
+    <section class="config-section">
+      <h2>🏪 Dados da Empresa</h2>
+      <form id="companyForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome da Empresa</label>
+            <input type="text" id="companyName" placeholder="Deliká Bolos e Doces">
+          </div>
+          <div class="form-group">
+            <label>Telefone Principal</label>
+            <input type="tel" id="companyPhone" placeholder="(11) 99999-9999">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>WhatsApp</label>
+            <input type="tel" id="companyWhatsapp" placeholder="5511999999999">
+            <p class="hint">Formato: 5511999999999 (sem espaços)</p>
+          </div>
+          <div class="form-group">
+            <label>Endereço</label>
+            <input type="text" id="companyAddress" placeholder="Rua das Flores, 123 - Centro">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descrição / Tagline</label>
+          <input type="text" id="companyTagline" placeholder="Bolos e doces artesanais">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="saveCompanyData()">
+          <i class="fas fa-save"></i> Salvar Dados
+        </button>
+      </form>
+    </section>
+
+    <!-- Preferências -->
+    <section class="config-section">
+      <h2>🎯 Preferências</h2>
+      <div class="form-group">
+        <div class="toggle-container">
+          <label class="toggle">
+            <input type="checkbox" id="autoStockReduction">
+            <span class="toggle-slider"></span>
+          </label>
+          <span>Baixa automática de estoque ao concluir pedidos</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="toggle-container">
+          <label class="toggle">
+            <input type="checkbox" id="notifyLowStock">
+            <span class="toggle-slider"></span>
+          </label>
+          <span>Notificar estoque baixo</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Margem de Lucro Padrão (%)</label>
+        <input type="number" id="defaultMargin" value="50" min="0" max="100">
+      </div>
+      <button type="button" class="btn btn-primary" onclick="savePreferences()">
+        <i class="fas fa-save"></i> Salvar Preferências
+      </button>
+    </section>
+
+    <!-- Backup -->
+    <section class="config-section">
+      <h2>💾 Backup e Restauração</h2>
+      <p style="color: #666; margin-bottom: 15px;">
+        Faça backup regularmente para não perder seus dados.
+      </p>
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="createBackup()">
+          <i class="fas fa-download"></i> Baixar Backup
+        </button>
+        <button class="btn btn-warning" onclick="document.getElementById('restoreFile').click()">
+          <i class="fas fa-upload"></i> Restaurar Backup
+        </button>
+        <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="restoreBackup(this)">
+      </div>
+    </section>
+
+    <!-- Dados do Sistema -->
+    <section class="config-section">
+      <h2>📊 Dados do Sistema</h2>
+      <div class="system-info">
+        <h3>Informações Atuais</h3>
+        <div class="info-grid" id="systemInfo"></div>
+      </div>
+
+      <div class="form-group" style="margin-top: 20px;">
+        <label>Uso do Armazenamento (LocalStorage)</label>
+        <div class="storage-bar">
+          <div class="fill" id="storageFill" style="width: 0%"></div>
+        </div>
+        <div class="storage-info">
+          <span id="storageUsed">0 KB usado</span>
+          <span>Limite: 5 MB por domínio</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Zona de Perigo -->
+    <section class="config-section" style="border: 2px solid var(--danger);">
+      <h2 style="color: var(--danger);">⚠️ Zona de Perigo</h2>
+      <p style="color: #666; margin-bottom: 15px;">
+        Estas ações são irreversíveis. Tenha certeza antes de prosseguir.
+      </p>
+      <div class="btn-group">
+        <button class="btn btn-warning" onclick="clearOrders()">
+          <i class="fas fa-trash"></i> Limpar Pedidos
+        </button>
+        <button class="btn btn-warning" onclick="clearClients()">
+          <i class="fas fa-trash"></i> Limpar Clientes
+        </button>
+        <button class="btn btn-danger" onclick="clearAllData()">
+          <i class="fas fa-exclamation-triangle"></i> Apagar Tudo
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../admin/database.js"></script>
+  <script>
+    function loadSettings() {
+      const companyData = JSON.parse(localStorage.getItem('delika_company_data') || '{}');
+      document.getElementById('companyName').value = companyData.name || '';
+      document.getElementById('companyPhone').value = companyData.phone || '';
+      document.getElementById('companyWhatsapp').value = companyData.whatsapp || '';
+      document.getElementById('companyAddress').value = companyData.address || '';
+      document.getElementById('companyTagline').value = companyData.tagline || '';
+
+      const preferences = JSON.parse(localStorage.getItem('delika_preferences') || '{}');
+      document.getElementById('autoStockReduction').checked = preferences.autoStockReduction !== false;
+      document.getElementById('notifyLowStock').checked = preferences.notifyLowStock !== false;
+      document.getElementById('defaultMargin').value = preferences.defaultMargin || 50;
+    }
+
+    function saveCompanyData() {
+      const companyData = {
+        name: document.getElementById('companyName').value,
+        phone: document.getElementById('companyPhone').value,
+        whatsapp: document.getElementById('companyWhatsapp').value,
+        address: document.getElementById('companyAddress').value,
+        tagline: document.getElementById('companyTagline').value,
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('delika_company_data', JSON.stringify(companyData));
+      showAlert('success', 'Dados da empresa salvos com sucesso!');
+    }
+
+    function savePreferences() {
+      const preferences = {
+        autoStockReduction: document.getElementById('autoStockReduction').checked,
+        notifyLowStock: document.getElementById('notifyLowStock').checked,
+        defaultMargin: parseFloat(document.getElementById('defaultMargin').value) || 50,
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('delika_preferences', JSON.stringify(preferences));
+      showAlert('success', 'Preferências salvas com sucesso!');
+    }
+
+    function createBackup() {
+      const backup = {
+        version: '1.0',
+        createdAt: new Date().toISOString(),
+        data: {
+          catalog: localStorage.getItem(DB_CONFIG.KEYS.CATALOG),
+          recipes: localStorage.getItem(DB_CONFIG.KEYS.RECIPES),
+          inventory: localStorage.getItem(DB_CONFIG.KEYS.INVENTORY),
+          orders: localStorage.getItem(DB_CONFIG.KEYS.ORDERS),
+          clients: localStorage.getItem(DB_CONFIG.KEYS.CLIENTS),
+          companyData: localStorage.getItem('delika_company_data'),
+          preferences: localStorage.getItem('delika_preferences'),
+          finance: localStorage.getItem(DB_CONFIG.KEYS.FINANCE)
         }
+      };
 
-        // Salvar dados da empresa
-        function saveCompanyData() {
-            const companyData = {
-                name: document.getElementById('companyName').value,
-                phone: document.getElementById('companyPhone').value,
-                whatsapp: document.getElementById('companyWhatsapp').value,
-                address: document.getElementById('companyAddress').value,
-                tagline: document.getElementById('companyTagline').value,
-                updatedAt: new Date().toISOString()
-            };
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `delika_backup_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
 
-            localStorage.setItem('delika_company_data', JSON.stringify(companyData));
-            showAlert('success', 'Dados da empresa salvos com sucesso!');
+      showAlert('success', 'Backup baixado com sucesso!');
+    }
+
+    function restoreBackup(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      if (!confirm('Isso substituirá todos os dados atuais. Continuar?')) {
+        input.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const backup = JSON.parse(e.target.result);
+
+          if (backup.data.catalog) localStorage.setItem(DB_CONFIG.KEYS.CATALOG, backup.data.catalog);
+          if (backup.data.recipes) localStorage.setItem(DB_CONFIG.KEYS.RECIPES, backup.data.recipes);
+          if (backup.data.inventory) localStorage.setItem(DB_CONFIG.KEYS.INVENTORY, backup.data.inventory);
+          if (backup.data.orders) localStorage.setItem(DB_CONFIG.KEYS.ORDERS, backup.data.orders);
+          if (backup.data.clients) localStorage.setItem(DB_CONFIG.KEYS.CLIENTS, backup.data.clients);
+          if (backup.data.companyData) localStorage.setItem('delika_company_data', backup.data.companyData);
+          if (backup.data.preferences) localStorage.setItem('delika_preferences', backup.data.preferences);
+          if (backup.data.finance) localStorage.setItem(DB_CONFIG.KEYS.FINANCE, backup.data.finance);
+
+          loadSettings();
+          updateSystemInfo();
+          showAlert('success', 'Backup restaurado com sucesso!');
+
+          setTimeout(() => location.reload(), 2000);
+
+        } catch (err) {
+          showAlert('danger', 'Erro ao restaurar backup. Arquivo inválido.');
         }
+      };
+      reader.readAsText(file);
+      input.value = '';
+    }
 
-        // Salvar preferências
-        function savePreferences() {
-            const preferences = {
-                autoStockReduction: document.getElementById('autoStockReduction').checked,
-                notifyLowStock: document.getElementById('notifyLowStock').checked,
-                defaultMargin: parseFloat(document.getElementById('defaultMargin').value) || 50,
-                updatedAt: new Date().toISOString()
-            };
+    function updateSystemInfo() {
+      const catalog = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.CATALOG) || '[]');
+      const recipes = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.RECIPES) || '[]');
+      const inventory = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.INVENTORY) || '[]');
+      const orders = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.ORDERS) || '[]');
+      const clients = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.CLIENTS) || '[]');
 
-            localStorage.setItem('delika_preferences', JSON.stringify(preferences));
-            showAlert('success', 'Preferências salvas com sucesso!');
+      document.getElementById('systemInfo').innerHTML = `
+        <div class="info-item"><label>Produtos no Catálogo</label><div class="value">${catalog.length}</div></div>
+        <div class="info-item"><label>Receitas</label><div class="value">${recipes.length}</div></div>
+        <div class="info-item"><label>Insumos em Estoque</label><div class="value">${inventory.length}</div></div>
+        <div class="info-item"><label>Pedidos Registrados</label><div class="value">${orders.length}</div></div>
+        <div class="info-item"><label>Clientes Cadastrados</label><div class="value">${clients.length}</div></div>
+        <div class="info-item"><label>Última Atualização</label><div class="value">${new Date().toLocaleDateString('pt-BR')}</div></div>
+      `;
+
+      let totalSize = 0;
+      for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key) && key.startsWith('delika')) {
+          totalSize += localStorage[key].length * 2;
         }
+      }
 
-        // Criar backup
-        function createBackup() {
-            const backup = {
-                version: '1.0',
-                createdAt: new Date().toISOString(),
-                data: {
-                    catalog: localStorage.getItem(DB_CONFIG.KEYS.CATALOG),
-                    recipes: localStorage.getItem(DB_CONFIG.KEYS.RECIPES),
-                    inventory: localStorage.getItem(DB_CONFIG.KEYS.INVENTORY),
-                    orders: localStorage.getItem(DB_CONFIG.KEYS.ORDERS),
-                    clients: localStorage.getItem(DB_CONFIG.KEYS.CLIENTS),
-                    companyData: localStorage.getItem('delika_company_data'),
-                    preferences: localStorage.getItem('delika_preferences'),
-                    finance: localStorage.getItem(DB_CONFIG.KEYS.FINANCE)
-                }
-            };
+      const usedKB = (totalSize / 1024).toFixed(2);
+      const usedPercent = Math.min((totalSize / (5 * 1024 * 1024)) * 100, 100);
 
-            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `delika_backup_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+      document.getElementById('storageUsed').textContent = `${usedKB} KB usado`;
+      document.getElementById('storageFill').style.width = `${usedPercent}%`;
+    }
 
-            showAlert('success', 'Backup baixado com sucesso!');
-        }
+    function clearOrders() {
+      if (!confirm('Tem certeza que deseja limpar todos os pedidos?')) return;
+      localStorage.removeItem(DB_CONFIG.KEYS.ORDERS);
+      localStorage.removeItem(DB_CONFIG.KEYS.FINANCE);
+      updateSystemInfo();
+      showAlert('success', 'Pedidos limpos com sucesso!');
+    }
 
-        // Restaurar backup
-        function restoreBackup(input) {
-            const file = input.files[0];
-            if (!file) return;
+    function clearClients() {
+      if (!confirm('Tem certeza que deseja limpar todos os clientes?')) return;
+      localStorage.removeItem(DB_CONFIG.KEYS.CLIENTS);
+      updateSystemInfo();
+      showAlert('success', 'Clientes limpos com sucesso!');
+    }
 
-            if (!confirm('Isso substituirá todos os dados atuais. Continuar?')) {
-                input.value = '';
-                return;
-            }
+    function clearAllData() {
+      if (!confirm('💥 ATENÇÃO: Isso apagará TODOS os dados! Continuar?')) return;
+      if (!confirm('Você tem CERTEZA ABSOLUTA?')) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const backup = JSON.parse(e.target.result);
+      const keysToRemove = [];
+      for (let key in localStorage) {
+        if (key.startsWith('delika')) keysToRemove.push(key);
+      }
+      keysToRemove.forEach(key => localStorage.removeItem(key));
 
-                    if (backup.data.catalog) localStorage.setItem(DB_CONFIG.KEYS.CATALOG, backup.data.catalog);
-                    if (backup.data.recipes) localStorage.setItem(DB_CONFIG.KEYS.RECIPES, backup.data.recipes);
-                    if (backup.data.inventory) localStorage.setItem(DB_CONFIG.KEYS.INVENTORY, backup.data.inventory);
-                    if (backup.data.orders) localStorage.setItem(DB_CONFIG.KEYS.ORDERS, backup.data.orders);
-                    if (backup.data.clients) localStorage.setItem(DB_CONFIG.KEYS.CLIENTS, backup.data.clients);
-                    if (backup.data.companyData) localStorage.setItem('delika_company_data', backup.data.companyData);
-                    if (backup.data.preferences) localStorage.setItem('delika_preferences', backup.data.preferences);
-                    if (backup.data.finance) localStorage.setItem(DB_CONFIG.KEYS.FINANCE, backup.data.finance);
+      updateSystemInfo();
+      loadSettings();
+      showAlert('warning', 'Todos os dados foram apagados.');
+      setTimeout(() => location.reload(), 2000);
+    }
 
-                    loadSettings();
-                    updateSystemInfo();
-                    showAlert('success', 'Backup restaurado com sucesso!');
+    function showAlert(type, message) {
+      const container = document.getElementById('alertContainer');
+      const icons = { success: '✓', warning: '⚠', danger: '✕' };
+      container.innerHTML = `<div class="alert alert-${type}"><span style="font-size: 1.2rem;">${icons[type]}</span><span>${message}</span></div>`;
+      setTimeout(() => { container.innerHTML = ''; }, 5000);
+    }
 
-                    // Recarregar página após 2 segundos
-                    setTimeout(() => location.reload(), 2000);
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    function logout() { if (confirm('Deseja sair do sistema?')) location.href = 'login.html'; }
 
-                } catch (err) {
-                    showAlert('danger', 'Erro ao restaurar backup. Arquivo inválido.');
-                }
-            };
-            reader.readAsText(file);
-            input.value = '';
-        }
-
-        // Atualizar info do sistema
-        function updateSystemInfo() {
-            const catalog = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.CATALOG) || '[]');
-            const recipes = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.RECIPES) || '[]');
-            const inventory = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.INVENTORY) || '[]');
-            const orders = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.ORDERS) || '[]');
-            const clients = JSON.parse(localStorage.getItem(DB_CONFIG.KEYS.CLIENTS) || '[]');
-
-            document.getElementById('systemInfo').innerHTML = `
-                <div class="info-item">
-                    <label>Produtos no Catálogo</label>
-                    <div class="value">${catalog.length}</div>
-                </div>
-                <div class="info-item">
-                    <label>Receitas</label>
-                    <div class="value">${recipes.length}</div>
-                </div>
-                <div class="info-item">
-                    <label>Insumos em Estoque</label>
-                    <div class="value">${inventory.length}</div>
-                </div>
-                <div class="info-item">
-                    <label>Pedidos Registrados</label>
-                    <div class="value">${orders.length}</div>
-                </div>
-                <div class="info-item">
-                    <label>Clientes Cadastrados</label>
-                    <div class="value">${clients.length}</div>
-                </div>
-                <div class="info-item">
-                    <label>Última Atualização</label>
-                    <div class="value">${new Date().toLocaleDateString('pt-BR')}</div>
-                </div>
-            `;
-
-            // Calcular uso de armazenamento
-            let totalSize = 0;
-            for (let key in localStorage) {
-                if (localStorage.hasOwnProperty(key) && key.startsWith('delika')) {
-                    totalSize += localStorage[key].length * 2; // UTF-16 = 2 bytes por char
-                }
-            }
-
-            const usedKB = (totalSize / 1024).toFixed(2);
-            const usedPercent = Math.min((totalSize / (5 * 1024 * 1024)) * 100, 100);
-
-            document.getElementById('storageUsed').textContent = `${usedKB} KB usado`;
-            document.getElementById('storageFill').style.width = `${usedPercent}%`;
-        }
-
-        // Limpar pedidos
-        function clearOrders() {
-            if (!confirm('Tem certeza que deseja limpar todos os pedidos? Esta ação não pode ser desfeita.')) return;
-
-            localStorage.removeItem(DB_CONFIG.KEYS.ORDERS);
-            localStorage.removeItem(DB_CONFIG.KEYS.FINANCE);
-            updateSystemInfo();
-            showAlert('success', 'Pedidos limpos com sucesso!');
-        }
-
-        // Limpar clientes
-        function clearClients() {
-            if (!confirm('Tem certeza que deseja limpar todos os clientes? Esta ação não pode ser desfeita.')) return;
-
-            localStorage.removeItem(DB_CONFIG.KEYS.CLIENTS);
-            updateSystemInfo();
-            showAlert('success', 'Clientes limpos com sucesso!');
-        }
-
-        // Limpar todos os dados
-        function clearAllData() {
-            if (!confirm('💥 ATENÇÃO: Isso apagará TODOS os dados do sistema (produtos, pedidos, clientes, estoque, etc). Esta ação é IRREVERSÍVEL!\n\nTem certeza que deseja continuar?')) return;
-
-            if (!confirm('Você tem CERTEZA ABSOLUTA? Todos os dados serão perdidos para sempre!')) return;
-
-            const keysToRemove = [];
-            for (let key in localStorage) {
-                if (key.startsWith('delika')) {
-                    keysToRemove.push(key);
-                }
-            }
-
-            keysToRemove.forEach(key => localStorage.removeItem(key));
-            updateSystemInfo();
-            loadSettings();
-            showAlert('warning', 'Todos os dados foram apagados. Página será recarregada.');
-            setTimeout(() => location.reload(), 2000);
-        }
-
-        // Mostrar alerta
-        function showAlert(type, message) {
-            const container = document.getElementById('alertContainer');
-            const icons = {
-                success: '✓',
-                warning: '⚠',
-                danger: '✕'
-            };
-
-            container.innerHTML = `
-                <div class="alert alert-${type}">
-                    <span style="font-size: 1.2rem;">${icons[type]}</span>
-                    <span>${message}</span>
-                </div>
-            `;
-
-            setTimeout(() => {
-                container.innerHTML = '';
-            }, 5000);
-        }
-
-        // Inicializar
-        function init() {
-            loadSettings();
-            updateSystemInfo();
-        }
-
-        init();
-    </script>
+    function init() { loadSettings(); updateSystemInfo(); }
+    init();
+  </script>
 </body>
 </html>
