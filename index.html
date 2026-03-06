@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/vitrine.css">
   <style>
     /* VARIÁVEIS - IDENTIDADE DELIKÁ (Cores Principais) */
     :root {
@@ -658,6 +659,20 @@
     </div>
   </section>
 
+  <!-- SEÇÃO DE PRODUTOS (VITRINE DINÂMICA) -->
+  <section class="products-section" id="produtos">
+    <div class="products-header">
+      <h2>Nossos Produtos</h2>
+      <p>Deliciosos bolos e doces feitos com amor</p>
+    </div>
+    <div class="category-filters" id="categoryFilters">
+      <!-- Renderizado via JS -->
+    </div>
+    <div class="products-grid" id="productsGrid">
+      <!-- Renderizado via JS -->
+    </div>
+  </section>
+
     <!-- FOOTER -->
   <footer id="contato">
     <div class="footer-container">
@@ -697,81 +712,6 @@
     <i class="fa-brands fa-whatsapp" style="color: white; font-size: 28px;"></i>
   </a>
 
-  <script>
-    // Menu Mobile
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-
-    menuToggle.addEventListener('click', () => {
-      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', !isExpanded);
-      navMenu.classList.toggle('active');
-    });
-
-    // Banner Rotativo
-    const bannerSlider = document.getElementById('bannerSlider');
-    const slides = document.querySelectorAll('.banner-slide');
-    const dots = document.querySelectorAll('.banner-dot');
-    const prevBtn = document.querySelector('.banner-arrow.prev');
-    const nextBtn = document.querySelector('.banner-arrow.next');
-    let currentSlide = 0;
-    let autoSlideInterval;
-
-    function goToSlide(index) {
-      if (index < 0) index = slides.length - 1;
-      if (index >= slides.length) index = 0;
-      
-      currentSlide = index;
-      bannerSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
-      
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
-      });
-    }
-
-    function nextSlide() {
-      goToSlide(currentSlide + 1);
-    }
-
-    function prevSlide() {
-      goToSlide(currentSlide - 1);
-    }
-
-    function startAutoSlide() {
-      autoSlideInterval = setInterval(nextSlide, 5000);
-    }
-
-    function stopAutoSlide() {
-      clearInterval(autoSlideInterval);
-    }
-
-    // Event Listeners
-    prevBtn.addEventListener('click', () => {
-      prevSlide();
-      stopAutoSlide();
-      startAutoSlide();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      nextSlide();
-      stopAutoSlide();
-      startAutoSlide();
-    });
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        goToSlide(index);
-        stopAutoSlide();
-        startAutoSlide();
-      });
-    });
-
-    // Pausar auto-slide ao hover
-    bannerSlider.addEventListener('mouseenter', stopAutoSlide);
-    bannerSlider.addEventListener('mouseleave', startAutoSlide);
-
-    // Iniciar
-    startAutoSlide();
-  </script>
+  <script src="js/vitrine.js"></script>
 </body>
 </html>

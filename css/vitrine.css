@@ -1,0 +1,233 @@
+/**
+ * Vitrine Deliká - CSS Dinâmico
+ * Responsivo e integrado com o ADM
+ */
+
+/* Seção de Produtos */
+.products-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.products-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.products-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: var(--roxo-delika);
+  margin-bottom: 10px;
+}
+
+.products-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Filtros de Categoria */
+.category-filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  padding: 12px 25px;
+  background: white;
+  border: 2px solid var(--roxo-delika);
+  border-radius: 25px;
+  color: var(--roxo-delika);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background: var(--lilas-claro);
+}
+
+.filter-btn.active {
+  background: var(--roxo-delika);
+  color: white;
+}
+
+/* Grid de Produtos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* Card de Produto */
+.product-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.product-card.sold-out {
+  opacity: 0.7;
+}
+
+.product-card.sold-out:hover {
+  transform: none;
+}
+
+.product-image {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--lilas-claro);
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-card.sold-out .product-image img {
+  filter: grayscale(50%);
+}
+
+.sold-out-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--danger);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.featured-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--dourado);
+  color: var(--roxo-escuro);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.product-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.product-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--roxo-escuro);
+  margin-bottom: 8px;
+}
+
+.product-info p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  min-height: 40px;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--roxo-delika);
+  margin-bottom: 15px;
+}
+
+.product-info .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 30px;
+  background: var(--roxo-delika);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-info .btn-primary:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-2px);
+}
+
+.product-info .btn-disabled {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 30px;
+  background: #ccc;
+  color: #666;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: not-allowed;
+}
+
+/* Responsividade */
+@media (max-width: 770px) {
+  .products-section {
+    padding: 40px 15px;
+  }
+
+  .products-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .category-filters {
+    gap: 10px;
+  }
+
+  .filter-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-image {
+    height: 200px;
+  }
+}
