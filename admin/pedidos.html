@@ -459,6 +459,29 @@
       }
     }
 
+    /* Responsividade Intermediária */
+    @media (max-width: 1200px) {
+      .kanban-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .kanban-board {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 770px) {
       .sidebar {
         transform: translateX(-100%);

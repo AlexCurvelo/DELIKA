@@ -640,6 +640,50 @@
       display: none;
     }
 
+    @media (max-width: 1200px) {
+      .table-header {
+        grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr;
+      }
+
+      .table-header .email {
+        display: none;
+      }
+
+      .table-row {
+        grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr;
+      }
+
+      .table-row .email {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .table-header {
+        grid-template-columns: 2fr 1.5fr 1fr 1fr;
+      }
+
+      .table-header .email,
+      .table-header .phone {
+        display: none;
+      }
+
+      .table-row {
+        grid-template-columns: 2fr 1.5fr 1fr 1fr;
+      }
+
+      .table-row .email,
+      .table-row .phone {
+        display: none;
+      }
+    }
+
     @media (max-width: 770px) {
       .sidebar {
         transform: translateX(-100%);
@@ -705,44 +749,6 @@
       .table-row .total-orders,
       .table-row .total-spent {
         width: calc(50% - 5px);
-      }
-    }
-
-    @media (max-width: 1200px) {
-      .table-header {
-        grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr;
-      }
-
-      .table-header .email {
-        display: none;
-      }
-
-      .table-row {
-        grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr;
-      }
-
-      .table-row .email {
-        display: none;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .table-header {
-        grid-template-columns: 2fr 1.5fr 1fr 1fr;
-      }
-
-      .table-header .email,
-      .table-header .phone {
-        display: none;
-      }
-
-      .table-row {
-        grid-template-columns: 2fr 1.5fr 1fr 1fr;
-      }
-
-      .table-row .email,
-      .table-row .phone {
-        display: none;
       }
     }
   </style>

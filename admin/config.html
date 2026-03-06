@@ -335,6 +335,25 @@
       display: none;
     }
 
+    /* Responsivo */
+    .menu-toggle {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .main-content {
+        padding: 25px;
+      }
+
+      .config-section {
+        padding: 20px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 770px) {
       .sidebar {
         transform: translateX(-100%);

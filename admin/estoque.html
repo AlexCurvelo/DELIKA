@@ -539,6 +539,26 @@
       display: none;
     }
 
+    @media (max-width: 1200px) {
+      .table-header { grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; }
+      .table-header .supplier { display: none; }
+      .table-row { grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; }
+      .table-row .supplier { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .table-header { grid-template-columns: 2fr 1fr 1fr 1fr; }
+      .table-header .unit, .table-header .cost-per-unit { display: none; }
+      .table-row { grid-template-columns: 2fr 1fr 1fr 1fr; }
+      .table-row .unit, .table-row .cost-per-unit { display: none; }
+    }
+
     @media (max-width: 770px) {
       .sidebar {
         transform: translateX(-100%);
@@ -604,21 +624,9 @@
         grid-template-columns: 1fr;
       }
     }
-
-    @media (max-width: 1200px) {
-      .table-header { grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; }
-      .table-header .supplier { display: none; }
-      .table-row { grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; }
-      .table-row .supplier { display: none; }
-    }
-
-    @media (max-width: 900px) {
-      .table-header { grid-template-columns: 2fr 1fr 1fr 1fr; }
-      .table-header .unit, .table-header .cost-per-unit { display: none; }
-      .table-row { grid-template-columns: 2fr 1fr 1fr 1fr; }
-      .table-row .unit, .table-row .cost-per-unit { display: none; }
-    }
-
+  </style>
+</head>
+<body>
   <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('active')">
     <i class="fas fa-bars"></i>
   </button>

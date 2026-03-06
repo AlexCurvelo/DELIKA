@@ -503,6 +503,36 @@
       margin-bottom: 20px;
     }
 
+    /* Responsividade Intermediária */
+    @media (max-width: 1200px) {
+      table th:nth-child(n+6),
+      table td:nth-child(n+6) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+
+      table th:nth-child(n+4),
+      table td:nth-child(n+4) {
+        display: none;
+      }
+
+      .modal {
+        width: 95%;
+        padding: 20px;
+      }
+    }
+
     /* Mobile */
     @media (max-width: 770px) {
       .sidebar {
