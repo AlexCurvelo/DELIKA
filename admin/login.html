@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Admin Deliká</title>
+  <link rel="icon" href="../assets/images/logodlk.webp" type="image/webp">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+
+  <style>
+    :root {
+      --roxo-delika: #6B2D8C;
+      --roxo-escuro: #311440;
+      --dourado: #D4AF37;
+      --bg-site: #FAF7FC;
+      --text-dark: #2C2C2C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background: linear-gradient(135deg, var(--roxo-escuro) 0%, var(--roxo-delika) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 450px;
+      width: 100%;
+      padding: 50px 40px;
+      border: 3px solid var(--dourado);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .login-logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--roxo-delika);
+    }
+
+    .login-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .login-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--roxo-escuro);
+      margin-bottom: 5px;
+    }
+
+    .login-header p {
+      color: var(--roxo-delika);
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 20px;
+      border: 2px solid #E0E0E0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--roxo-delika);
+      box-shadow: 0 0 0 4px rgba(107, 45, 140, 0.1);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      background: var(--roxo-delika);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Urbanist', sans-serif;
+      margin-bottom: 15px;
+    }
+
+    .btn-login:hover {
+      background: var(--roxo-escuro);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(107, 45, 140, 0.4);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .forgot-password {
+      text-align: center;
+      color: var(--roxo-delika);
+      font-size: 0.9rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    .back-to-site {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .back-to-site:hover {
+      color: white;
+    }
+
+    .back-to-site i {
+      margin-right: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 40px 25px;
+      }
+
+      .login-header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="login-logo">
+        <img src="../assets/images/logodlk.webp" alt="Logo Deliká">
+      </div>
+      <h1>Admin Deliká</h1>
+      <p>Área Administrativa</p>
+    </div>
+
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="username">Usuário</label>
+        <input type="text" id="username" name="username" placeholder="Digite seu usuário" required autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" name="password" placeholder="Digite sua senha" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i> Entrar
+      </button>
+    </form>
+
+    <a href="#" class="forgot-password">Esqueceu a senha?</a>
+
+    <a href="../index.html" class="back-to-site">
+      <i class="fas fa-arrow-left"></i> Voltar ao site
+    </a>
+  </div>
+
+  <!-- Módulo de Autenticação -->
+  <script src="adm-auth.js"></script>
+
+  <script>
+    // Verificar se já está logado
+    if (window.auth && window.auth.isAuthenticated()) {
+      window.location.href = 'painel.html';
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const btn = document.querySelector('.btn-login');
+
+      // Feedback visual
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+
+      try {
+        const result = await window.auth.login(username, password);
+
+        if (result.success) {
+          // Redirecionar para painel
+          window.location.href = 'painel.html';
+        } else {
+          alert(result.message);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Erro ao fazer login. Tente novamente.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+      }
+    }
+  </script>
+</body>
+</html>
